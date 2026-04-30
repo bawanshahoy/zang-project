@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>زەنگ | کێ فرودەرە؟</title>
+    <title>کێ فریودەرە؟ | زەنگ</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;700;900&display=swap');
@@ -40,67 +40,60 @@
         .hidden-section { display: none; }
     </style>
 </head>
-<body class="p-6 flex flex-col items-center">
+<body class="p-4 md:p-6 flex flex-col items-center">
 
-    <!-- دوگمەی گەڕانەوە -->
-    <nav class="w-full max-w-md mb-8">
-        <a href="../index.html" class="inline-block bg-white border-2 border-black px-6 py-2 font-black shadow-[4px_4px_0px_#000] hover:bg-yellow-400 transition">
+    <nav class="w-full max-w-md mb-6">
+        <a href="../index.html" class="inline-block bg-white border-2 border-black px-4 py-2 font-black shadow-[4px_4px_0px_#000] hover:bg-yellow-400 text-sm md:text-base">
             ➔ گەڕانەوە بۆ سەرەکی
         </a>
     </nav>
 
-    <!-- 1. ڕێکخستنی یاریزانەکان -->
-    <div id="section-setup" class="w-full max-w-md neo-box p-8">
-        <h1 class="text-4xl font-[900] mb-8 text-center border-b-4 border-black pb-4">ڕێکخستنی یاری</h1>
-        
-        <div id="player-inputs" class="space-y-4">
-            <input type="text" placeholder="ناوی یاریزانی ١" class="w-full p-4 border-4 border-black font-bold outline-none focus:bg-yellow-50">
-            <input type="text" placeholder="ناوی یاریزانی ٢" class="w-full p-4 border-4 border-black font-bold outline-none focus:bg-yellow-50">
-            <input type="text" placeholder="ناوی یاریزانی ٣" class="w-full p-4 border-4 border-black font-bold outline-none focus:bg-yellow-50">
-            <input type="text" placeholder="ناوی یاریزانی ٤" class="w-full p-4 border-4 border-black font-bold outline-none focus:bg-yellow-50">
+    <!-- ڕێکخستن -->
+    <div id="section-setup" class="w-full max-w-md neo-box p-6 md:p-8">
+        <h1 class="text-3xl md:text-4xl font-[900] mb-6 text-center border-b-4 border-black pb-4">ڕێکخستنی یاری</h1>
+        <div id="player-inputs" class="space-y-3">
+            <input type="text" placeholder="ناوی یاریزانی ١" class="w-full p-3 md:p-4 border-4 border-black font-bold outline-none focus:bg-yellow-50">
+            <input type="text" placeholder="ناوی یاریزانی ٢" class="w-full p-3 md:p-4 border-4 border-black font-bold outline-none focus:bg-yellow-50">
+            <input type="text" placeholder="ناوی یاریزانی ٣" class="w-full p-3 md:p-4 border-4 border-black font-bold outline-none focus:bg-yellow-50">
+            <input type="text" placeholder="ناوی یاریزانی ٤" class="w-full p-3 md:p-4 border-4 border-black font-bold outline-none focus:bg-yellow-50">
         </div>
-
-        <div class="flex gap-4 mt-8">
-            <button onclick="addInput()" class="flex-1 bg-green-400 btn-action py-3 font-black text-xl">+ زیادکردن</button>
-            <button onclick="removeInput()" class="flex-1 bg-red-400 btn-action py-3 font-black text-xl">- کەمکردن</button>
+        <div class="flex gap-3 mt-6">
+            <button onclick="addInput()" class="flex-1 bg-green-400 btn-action py-3 font-black text-lg">+ زیادکردن</button>
+            <button onclick="removeInput()" class="flex-1 bg-red-400 btn-action py-3 font-black text-lg">- کەمکردن</button>
         </div>
-        
-        <button onclick="startGame()" class="w-full mt-6 bg-yellow-400 btn-action py-5 font-[900] text-2xl uppercase tracking-tighter">دەستپێکردنی تیروپشک! 🎲</button>
+        <button onclick="startGame()" class="w-full mt-6 bg-yellow-400 btn-action py-4 md:py-5 font-[900] text-xl md:text-2xl">تیروپشک! 🎲</button>
     </div>
 
-    <!-- 2. بەشی یاری (کارتەکان) -->
-    <div id="section-game" class="hidden-section w-full max-w-sm text-center">
-        <div class="bg-black text-white inline-block px-8 py-2 font-black text-2xl mb-6 -rotate-2 shadow-[6px_6px_0px_#ffcc00]">
+    <!-- یاری -->
+    <div id="section-game" class="hidden-section w-full max-w-sm text-center px-2">
+        <div class="bg-black text-white inline-block px-6 py-2 font-black text-xl md:text-2xl mb-4 -rotate-2">
             نۆبەی: <span id="current-player-name">ناو</span>
         </div>
-
-        <div class="relative w-full h-[450px] mb-10" style="perspective: 1000px;">
+        <div class="relative w-full h-[350px] md:h-[450px] mb-6" style="perspective: 1000px;">
             <div id="main-card" class="card-inner w-full h-full relative cursor-pointer" onclick="flipCard()">
-                <!-- ڕووی پێشەوە (سوور) -->
-                <div class="absolute w-full h-full bg-red-500 border-4 border-black flex flex-col items-center justify-center shadow-[10px_10px_0px_#000]" style="backface-visibility: hidden;">
-                    <div class="text-9xl mb-4">❓</div>
-                    <p class="font-black text-2xl text-white">کلیک بکە بۆ بینین</p>
+                <div class="absolute w-full h-full bg-red-500 border-4 border-black flex flex-col items-center justify-center shadow-[8px_8px_0px_#000]" style="backface-visibility: hidden;">
+                    <div class="text-7xl md:text-9xl mb-2">❓</div>
+                    <p class="font-black text-xl md:text-2xl text-white">کلیک بکە</p>
                 </div>
-                <!-- ڕووی پشتەوە (زەرد) -->
-                <div class="absolute w-full h-full bg-yellow-400 border-4 border-black flex flex-col items-center justify-center p-8 shadow-[10px_10px_0px_#000]" style="transform: rotateY(180deg); backface-visibility: hidden;">
-                    <p class="text-xl font-bold border-b-2 border-black mb-4">وشەکەی تۆ:</p>
-                    <h2 id="card-content" class="text-5xl font-[900] mb-10 text-black">...</h2>
-                    <button onclick="lockCard(event)" class="bg-black text-white px-10 py-4 font-black btn-action">بیشارەوە 🔐</button>
+                <div class="absolute w-full h-full bg-yellow-400 border-4 border-black flex flex-col items-center justify-center p-6 shadow-[8px_8px_0px_#000]" style="transform: rotateY(180deg); backface-visibility: hidden;">
+                    <p class="text-lg font-bold border-b-2 border-black mb-2">وشەکەی تۆ:</p>
+                    <h2 id="card-content" class="text-3xl md:text-5xl font-[900] mb-8 text-black">...</h2>
+                    <button onclick="lockCard(event)" class="bg-black text-white px-8 py-3 font-black btn-action">بیشارەوە 🔐</button>
                 </div>
             </div>
         </div>
-        <button id="btn-next" onclick="nextPlayer()" class="hidden w-full bg-green-400 btn-action py-5 font-[900] text-2xl">کەسی دواتر ➔</button>
+        <button id="btn-next" onclick="nextPlayer()" class="hidden w-full bg-green-400 btn-action py-4 md:py-5 font-[900] text-xl md:text-2xl uppercase">کەسی دواتر ➔</button>
     </div>
 
-    <!-- 3. کۆتایی و ئەنجام -->
-    <div id="section-finish" class="hidden-section text-center max-w-md w-full">
-        <div class="neo-box p-10 bg-white">
-            <h2 class="text-5xl font-[900] mb-8 text-green-600">ئامادەن!</h2>
-            <div class="bg-gray-100 border-4 border-black p-6 mb-8 shadow-[6px_6px_0px_#000]">
-                <p class="font-bold text-gray-500 mb-2 italic">یەکەم کەس دەستپێدەکات:</p>
-                <h3 id="starter-name" class="text-4xl font-black text-black">ناو</h3>
+    <!-- کۆتایی -->
+    <div id="section-finish" class="hidden-section text-center max-w-md w-full px-4">
+        <div class="neo-box p-8 md:p-10 bg-white">
+            <h2 class="text-4xl md:text-5xl font-[900] mb-6 text-green-600">ئامادەن!</h2>
+            <div class="bg-gray-100 border-4 border-black p-5 md:p-6 mb-8">
+                <p class="font-bold text-gray-500 mb-1">یەکەم کەس دەستپێدەکات:</p>
+                <h3 id="starter-name" class="text-3xl md:text-4xl font-black text-black">ناو</h3>
             </div>
-            <button onclick="location.reload()" class="bg-blue-500 text-white px-10 py-4 font-black btn-action text-xl">یاری نوێ</button>
+            <button onclick="location.reload()" class="bg-blue-500 text-white px-8 py-3 font-black btn-action text-lg">یاری نوێ</button>
         </div>
     </div>
 
@@ -119,7 +112,7 @@
         function addInput() {
             const container = document.getElementById('player-inputs');
             const input = document.createElement('input');
-            input.className = "w-full p-4 border-4 border-black font-bold outline-none focus:bg-yellow-50";
+            input.className = "w-full p-3 md:p-4 border-4 border-black font-bold outline-none focus:bg-yellow-50";
             input.placeholder = `ناوی یاریزانی ${container.children.length + 1}`;
             container.appendChild(input);
         }
@@ -136,8 +129,7 @@
             
             const word = wordBank[Math.floor(Math.random() * wordBank.length)];
             const imposterIndex = Math.floor(Math.random() * players.length);
-            roles = players.map((_, i) => i === imposterIndex ? "تۆ فریودەریت! " : word);
-            
+            roles = players.map((_, i) => i === imposterIndex ? "تۆ فریودەریت! 😈" : word);
             currentIndex = 0;
             updateCard();
             showSection('section-game');
@@ -150,29 +142,20 @@
             document.getElementById('btn-next').classList.add('hidden');
         }
 
-        function flipCard() {
-            if (!isLocked) {
-                document.getElementById('card-content').innerText = roles[currentIndex];
-                document.getElementById('main-card').classList.add('flipped');
-            }
-        }
+        function flipCard() { if (!isLocked) { document.getElementById('card-content').innerText = roles[currentIndex]; document.getElementById('main-card').classList.add('flipped'); } }
 
         function lockCard(event) {
-            event.stopPropagation(); // ڕێگری لە سوڕانەوەی کارتەکە دەکات کاتێک کلیک لە دوگمەکە دەکەیت
+            event.stopPropagation();
             isLocked = true;
             document.getElementById('main-card').classList.remove('flipped');
-            setTimeout(() => {
-                document.getElementById('btn-next').classList.remove('hidden');
-            }, 300);
+            setTimeout(() => { document.getElementById('btn-next').classList.remove('hidden'); }, 300);
         }
 
         function nextPlayer() {
             currentIndex++;
-            if (currentIndex < players.length) {
-                updateCard();
-            } else {
-                const starter = players[Math.floor(Math.random() * players.length)];
-                document.getElementById('starter-name').innerText = starter;
+            if (currentIndex < players.length) updateCard();
+            else {
+                document.getElementById('starter-name').innerText = players[Math.floor(Math.random() * players.length)];
                 showSection('section-finish');
             }
         }
