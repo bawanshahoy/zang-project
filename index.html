@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="ku" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>زەنگ | ZANG</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;700;900&display=swap');
+        
+        body {
+            font-family: 'Vazirmatn', sans-serif;
+            background-color: #e5e7eb; /* خۆڵەمێشییەکی کەمێک تۆختر بۆ ئەوەی سپییەکان زیاتر دەرکەون */
+            min-height: 100vh;
+        }
+
+        /* چاککردنی ناوی زەنگ بۆ ئەوەی تێکەڵ نەبێت */
+        .zang-title {
+            color: #ffcc00;
+            /* لادانی ستڕۆک و بەکارهێنانی سێبەری خاوێن */
+            filter: drop-shadow(4px 4px 0px #000);
+            -webkit-text-stroke: 1.5px #000;
+        }
+
+        .game-card {
+            background: white;
+            border: 4px solid #000;
+            box-shadow: 8px 8px 0px #000;
+            transition: all 0.15s ease-in-out;
+        }
+
+        .game-card:hover {
+            transform: translate(-4px, -4px);
+            box-shadow: 12px 12px 0px #000;
+        }
+
+        .badge-new {
+            background-color: #ff4d4d;
+            border: 2px solid #000;
+            box-shadow: 3px 3px 0px #000;
+        }
+
+        .btn-yellow { 
+            background-color: #ffcc00; 
+            border: 3px solid #000; 
+            box-shadow: 4px 4px 0px #000; 
+        }
+    </style>
+</head>
+<body class="p-8">
+
+    <header class="text-center my-12">
+        <!-- ناوی زەنگ بە شێوەیەکی خاوێن -->
+        <h1 class="text-9xl font-[900] zang-title mb-10">زەنگ</h1>
+        
+        <div class="flex justify-center gap-3">
+            <div class="bg-[#ff4d4d] w-16 h-4 border-2 border-black"></div>
+            <div class="bg-[#22c55e] w-16 h-4 border-2 border-black"></div>
+            <div class="bg-[#3b82f6] w-16 h-4 border-2 border-black"></div>
+        </div>
+    </header>
+
+    <main class="max-w-4xl mx-auto space-y-10">
+        
+        <!-- یاری یەکەم -->
+        <a href="imposter/index.html" class="game-card p-8 block group">
+            <div class="flex justify-between items-start mb-6">
+                <div class="text-8xl group-hover:scale-105 transition">🃏</div>
+                <div class="badge-new text-white px-5 py-2 font-black text-lg">ئێستا بکەرەوە</div>
+            </div>
+            <h2 class="text-5xl font-[900] mb-4">کێ فریودەرە؟</h2>
+            <p class="text-2xl font-bold text-gray-600 leading-relaxed">
+                هاوڕێکانت کۆبکەرەوە و بزانە کێ لە گروپەکەدا فێڵ دەکات و وشەکە نازانێت!
+            </p>
+            
+            <div class="mt-8 flex gap-4">
+                <div class="btn-yellow px-10 py-4 font-black text-2xl">دەستپێکردنی یاری</div>
+            </div>
+        </a>
+
+        <!-- بەشی بەم زوانە بە کوردی -->
+        <div class="game-card p-10 bg-[#d1d5db] border-dashed border-4 opacity-70">
+            <div class="flex items-center gap-6">
+                <div class="text-6xl grayscale">🔒</div>
+                <div>
+                    <h2 class="text-4xl font-[900] text-gray-500 uppercase">بەم زوانە...</h2>
+                    <p class="text-xl font-bold text-gray-400 mt-2">خەریکی ئامادەکردنی یارییەکی نوێین بۆت</p>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <footer class="mt-24 text-center">
+        <div class="inline-block border-4 border-black p-5 bg-white shadow-[6px 6px 0px #000]">
+            <span class="text-xl font-bold text-gray-500">گەشەپێدراوە لەلایەن:</span>
+            <span class="text-2xl font-[900] text-blue-600 mr-2">باوان شاهۆیی</span>
+        </div>
+    </footer>
+
+</body>
+</html>
