@@ -14,39 +14,41 @@
         .card-inner { transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275); transform-style: preserve-3d; }
         .card-inner.flipped { transform: rotateY(180deg); }
         .hidden-section { display: none; }
-        /* ستایلی تایبەت بۆ کاتژمێرەکە */
-        .timer-text { font-variant-numeric: tabular-nums; }
     </style>
 </head>
 <body class="p-4 md:p-6 flex flex-col items-center">
 
     <nav class="w-full max-w-md mb-6">
-        <a href="../index.html" class="inline-block bg-white border-2 border-black px-4 py-2 font-black shadow-[4px_4px_0px_#000] hover:bg-yellow-400 text-sm md:text-base">➔ گەڕانەوە</a>
+        <a href="../index.html" class="inline-block bg-white border-2 border-black px-4 py-2 font-black shadow-[4px_4px_0px_#000] hover:bg-yellow-400">➔ گەڕانەوە</a>
     </nav>
 
-    <!-- 1. ڕێکخستن -->
+    <!-- 1. ڕێکخستنی یاریزانەکان -->
     <div id="section-setup" class="w-full max-w-md neo-box p-6 md:p-8">
-        <h1 class="text-3xl md:text-4xl font-[900] mb-6 text-center border-b-4 border-black pb-4">ڕێکخستنی یاری</h1>
+        <h1 class="text-3xl font-[900] mb-6 text-center border-b-4 border-black pb-4">ڕێکخستنی یاری</h1>
         <div id="player-inputs" class="space-y-3">
-            <input type="text" placeholder="ناوی یاریزانی ١" class="w-full p-3 border-4 border-black font-bold outline-none">
-            <input type="text" placeholder="ناوی یاریزانی ٢" class="w-full p-3 border-4 border-black font-bold outline-none">
-            <input type="text" placeholder="ناوی یاریزانی ٣" class="w-full p-3 border-4 border-black font-bold outline-none">
-            <input type="text" placeholder="ناوی یاریزانی ٤" class="w-full p-3 border-4 border-black font-bold outline-none">
+            <input type="text" placeholder="ناوی یاریزانی ١" class="w-full p-3 border-4 border-black font-bold outline-none focus:bg-yellow-50">
+            <input type="text" placeholder="ناوی یاریزانی ٢" class="w-full p-3 border-4 border-black font-bold outline-none focus:bg-yellow-50">
+            <input type="text" placeholder="ناوی یاریزانی ٣" class="w-full p-3 border-4 border-black font-bold outline-none focus:bg-yellow-50">
+            <input type="text" placeholder="ناوی یاریزانی ٤" class="w-full p-3 border-4 border-black font-bold outline-none focus:bg-yellow-50">
+        </div>
+        <div class="flex gap-3 mt-6">
+            <button onclick="addInput()" class="flex-1 bg-green-500 btn-action py-3 font-black text-lg">+ زیادکردن</button>
+            <button onclick="removeInput()" class="flex-1 bg-red-500 btn-action py-3 font-black text-lg">- کەمکردن</button>
         </div>
         <button onclick="startGame()" class="w-full mt-6 bg-yellow-400 btn-action py-4 font-[900] text-xl md:text-2xl">تیروپشک! 🎲</button>
     </div>
 
-    <!-- 2. بەشی بینینی کارتەکان -->
+    <!-- 2. قۆناغی بینینی کارتەکان -->
     <div id="section-game" class="hidden-section w-full max-w-sm text-center">
         <div class="bg-black text-white inline-block px-6 py-2 font-black text-xl mb-4">نۆبەی: <span id="current-player-name">ناو</span></div>
         <div class="relative w-full h-[350px] md:h-[420px] mb-6" style="perspective: 1000px;">
             <div id="main-card" class="card-inner w-full h-full relative cursor-pointer" onclick="flipCard()">
-                <div class="absolute w-full h-full bg-red-500 border-4 border-black flex flex-col items-center justify-center shadow-[8px_8px_0px #000]" style="backface-visibility: hidden;">
+                <div class="absolute w-full h-full bg-red-500 border-4 border-black flex flex-col items-center justify-center shadow-[8px_8px_0px_#000]" style="backface-visibility: hidden;">
                     <div class="text-8xl mb-2">❓</div>
                     <p class="font-black text-xl text-white">کلیک بکە</p>
                 </div>
-                <div class="absolute w-full h-full bg-yellow-400 border-4 border-black flex flex-col items-center justify-center p-6" style="transform: rotateY(180deg); backface-visibility: hidden;">
-                    <h2 id="card-content" class="text-4xl font-[900] mb-8">...</h2>
+                <div class="absolute w-full h-full bg-yellow-400 border-4 border-black flex flex-col items-center justify-center p-6 shadow-[8px_8px_0px_#000]" style="transform: rotateY(180deg); backface-visibility: hidden;">
+                    <h2 id="card-content" class="text-3xl md:text-4xl font-[900] mb-8">...</h2>
                     <button onclick="lockCard(event)" class="bg-black text-white px-8 py-3 font-black btn-action">بیشارەوە 🔐</button>
                 </div>
             </div>
@@ -54,46 +56,61 @@
         <button id="btn-next" onclick="nextPlayer()" class="hidden w-full bg-green-400 btn-action py-4 font-[900] text-xl">کەسی دواتر ➔</button>
     </div>
 
-    <!-- 3. بەشی کاتژمێر (Timer) -->
+    <!-- 3. کاتژمێر و دیاریکردنی یەکەم کەس -->
     <div id="section-timer" class="hidden-section text-center max-w-md w-full px-4">
         <div class="neo-box p-8 bg-white border-blue-500">
-            <h2 class="text-3xl font-[900] mb-4">کاتی گفتوگۆ و ئاشکراکردن</h2>
-            <div id="timer-display" class="text-7xl font-black my-8 timer-text text-red-600">03:00</div>
-            <p id="timer-status" class="text-xl font-bold mb-6 text-gray-500 italic">بۆ دۆزینەوەی فریودەرەکە ٣ خولەکتان هەیە...</p>
-            <button id="btn-start-timer" onclick="startTimerCountdown()" class="w-full bg-blue-500 text-white py-4 font-black btn-action text-xl mb-4">دەستپێکردنی خولەک ژماردن ⏱️</button>
-            <button id="btn-end-game" onclick="showFinalResult()" class="hidden w-full bg-gray-800 text-white py-4 font-black btn-action text-xl">ئەنجامی تیروپشک</button>
+            <h2 class="text-2xl font-[900] mb-4 text-blue-600">کاتی گفتوگۆ</h2>
+            
+            <div class="bg-gray-100 border-4 border-black p-4 mb-6 shadow-[4px_4px_0px_#000]">
+                <p class="font-bold text-gray-500 mb-1">کەسی یەکەم کە قسە دەکات:</p>
+                <h3 id="starter-name" class="text-3xl font-black text-black">...</h3>
+            </div>
+
+            <div id="timer-display" class="text-7xl font-black my-8 text-red-600">03:00</div>
+            <button id="btn-start-timer" onclick="startTimerCountdown()" class="w-full bg-blue-500 text-white py-4 font-black btn-action text-xl mb-4">دەستپێکردنی کات ⏱️</button>
+            <button id="btn-end-game" onclick="showFinalResult()" class="hidden w-full bg-red-500 text-white py-4 font-black btn-action text-xl">کێ فریودەر بوو(ئەنجام)؟</button>
         </div>
     </div>
 
     <!-- 4. ئەنجامی کۆتایی -->
-    <div id="section-finish" class="hidden-section text-center max-w-md w-full">
+    <div id="section-finish" class="hidden-section text-center max-w-md w-full px-4">
         <div class="neo-box p-8 bg-white">
-            <h2 class="text-4xl font-black mb-6 text-blue-600 italic">کێ فریودەر بوو؟</h2>
-            <div class="bg-yellow-100 border-4 border-black p-6 mb-8">
-                <p class="font-bold text-gray-500">فریودەری ئەم جارە:</p>
+            <h2 class="text-3xl font-[900] mb-6 text-gray-500 italic">فریودەرەکە بریتی بوو لە:</h2>
+            <div class="bg-red-100 border-4 border-black p-6 mb-8 shadow-[6px_6px_0px_#000]">
                 <h3 id="imposter-name" class="text-4xl font-black text-red-600">ناو</h3>
             </div>
-            <button onclick="location.reload()" class="bg-black text-white px-10 py-4 font-black btn-action">یاری نوێ 🔄</button>
+            <button onclick="location.reload()" class="bg-black text-white px-10 py-4 font-black btn-action text-xl italic">یاری نوێ 🔄</button>
         </div>
     </div>
 
     <script>
         let players = []; let roles = []; let currentIndex = 0; let isLocked = false;
         let imposterName = ""; let timerInterval;
-        const wordBank = ["شێر", "مۆبایل", "هەولێر", "پیتزا", "قاوە", "کاتژمێر", "پشیلە", "فڕۆکە", "کەباب", "گۆڵ"
-            ,"بۆق" ,"کارتۆن" ,"بەلەکۆن" ,"یۆنان" ,"یانەی هەولێر" ,"ماستاو" ,"کەرکوک" ,"تەمەنی مناڵی" 
-            ,"دڵ دانەوە" ,"عاشق شێتە😂" ,"باسکە" ,"کەچەڵ" ,"کتێبخانە" ,"قەلوێرە" ,"مۆز", "ئەنەناس" , "فەرش"
-        ];
+        const wordBank = ["شێر", "مۆبایل", "هەولێر", "پیتزا", "قاوە", "سەعات", "پشیلە", "فڕۆکە", "کەباب", "گۆڵ", "ماسی", "کتێب"];
 
         function showSection(id) {
             document.querySelectorAll('div[id^="section-"]').forEach(s => s.classList.add('hidden-section'));
             document.getElementById(id).classList.remove('hidden-section');
         }
 
+        function addInput() {
+            const container = document.getElementById('player-inputs');
+            const input = document.createElement('input');
+            input.type = "text";
+            input.placeholder = `ناوی یاریزانی ${container.children.length + 1}`;
+            input.className = "w-full p-3 border-4 border-black font-bold outline-none focus:bg-yellow-50";
+            container.appendChild(input);
+        }
+
+        function removeInput() {
+            const container = document.getElementById('player-inputs');
+            if (container.children.length > 4) container.removeChild(container.lastChild);
+        }
+
         function startGame() {
             const inputs = document.querySelectorAll('input[type="text"]');
             players = Array.from(inputs).map(i => i.value.trim()).filter(v => v !== "");
-            if (players.length < 4) { alert("پێویستە ناوی ٤ یاریزان بنووسیت!"); return; }
+            if (players.length < 4) { alert("لانی کەم ٤ ناو بنووسە!"); return; }
             
             const word = wordBank[Math.floor(Math.random() * wordBank.length)];
             const imposterIndex = Math.floor(Math.random() * players.length);
@@ -124,24 +141,23 @@
         function nextPlayer() {
             currentIndex++;
             if (currentIndex < players.length) updateCard();
-            else showSection('section-timer');
+            else {
+                // دیاریکردنی یەکەم کەس کە دەست پێ دەکات
+                document.getElementById('starter-name').innerText = players[Math.floor(Math.random() * players.length)];
+                showSection('section-timer');
+            }
         }
 
         function startTimerCountdown() {
             document.getElementById('btn-start-timer').classList.add('hidden');
             document.getElementById('btn-end-game').classList.remove('hidden');
-            let timeLeft = 180; // ٣ خولەک بە چرکە
+            let timeLeft = 180;
             const display = document.getElementById('timer-display');
-            
             timerInterval = setInterval(() => {
-                let minutes = Math.floor(timeLeft / 60);
-                let seconds = timeLeft % 60;
-                display.innerText = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-                
-                if (timeLeft <= 0) {
-                    clearInterval(timerInterval);
-                    display.innerText = "کۆتایی!";
-                }
+                let m = Math.floor(timeLeft / 60);
+                let s = timeLeft % 60;
+                display.innerText = `${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
+                if (timeLeft <= 0) { clearInterval(timerInterval); display.innerText = "تەواو!"; }
                 timeLeft--;
             }, 1000);
         }
