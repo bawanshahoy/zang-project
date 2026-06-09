@@ -10,149 +10,202 @@
         
         body {
             font-family: 'Vazirmatn', sans-serif;
-            background-color: #e5e7eb;
+            background: linear-gradient(135deg, #f3f4f6 0%, #eef2ff 50%, #fae8ff 100%);
             min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
         }
 
-        .zang-title {
-            color: #ffcc00;
-            filter: drop-shadow(4px 4px 0px #000);
-            -webkit-text-stroke: 1.5px #000;
+        /* 🔮 ڕووناکی نەرمی نیۆن لە پشتەوە - بێ ئەوەی تاریک بێت */
+        .neon-bg-1 {
+            position: absolute;
+            width: 450px;
+            height: 450px;
+            background: radial-gradient(circle, rgba(168,85,247,0.12) 0%, rgba(236,72,153,0) 70%);
+            top: -5%;
+            left: -10%;
+            z-index: -1;
+            animation: pulseGlow 6s infinite alternate;
+        }
+        .neon-bg-2 {
+            position: absolute;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(59,130,246,0.1) 0%, rgba(99,102,241,0) 70%);
+            bottom: 5%;
+            right: -10%;
+            z-index: -1;
+            animation: pulseGlow 9s infinite alternate-reverse;
         }
 
-        .game-card {
-            background: white;
-            border: 4px solid #000;
-            box-shadow: 8px 8px 0px #000;
+        @keyframes pulseGlow {
+            0% { transform: scale(1); opacity: 0.7; }
+            100% { transform: scale(1.15); opacity: 1; }
+        }
+
+        /* ✨ ئەنیمەیشنی لەرینەوەی گەیمینگی بۆ کارتەکان */
+        @keyframes float-card {
+            0% { transform: translateY(0px); }
+            100% { transform: translateY(-8px); }
+        }
+        .animate-f1 { animation: float-card 4s ease-in-out infinite alternate; }
+        .animate-f2 { animation: float-card 4.5s ease-in-out infinite alternate 0.4s; }
+        .animate-f3 { animation: float-card 5s ease-in-out infinite alternate 0.8s; }
+
+        /* 🎛️ دیزاینی نوێی کارتەکان بە ستایلی درەوشانەوەی گەشاوە */
+        .game-card-neon {
+            background: rgba(255, 255, 255, 0.75);
+            backdrop-filter: blur(12px);
+            border: 2px solid rgba(255, 255, 255, 0.6);
+            border-bottom: 5px solid rgba(0, 0, 0, 0.15);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        /* 🔴 کاریگەری ڕەنگی سوور بۆ ئیمپۆستەر */
+        .card-imposter:hover {
+            border-color: #ef4444;
+            box-shadow: 0 0 25px rgba(239, 68, 68, 0.35), inset 0 0 10px rgba(239, 68, 68, 0.1);
+            background: rgba(255, 255, 255, 0.95);
+            transform: translateY(-4px) scale(1.01);
+        }
+
+        /* 🔵 کاریگەری ڕەنگی شین بۆ ڕاستی یان بوێری */
+        .card-truth:hover {
+            border-color: #3b82f6;
+            box-shadow: 0 0 25px rgba(59, 130, 246, 0.35), inset 0 0 10px rgba(59, 130, 246, 0.1);
+            background: rgba(255, 255, 255, 0.95);
+            transform: translateY(-4px) scale(1.01);
+        }
+
+        /* 🟢 کاریگەری ڕەنگی سەوز بۆ کاممان زیاتر */
+        .card-likely:hover {
+            border-color: #22c55e;
+            box-shadow: 0 0 25px rgba(34, 197, 94, 0.35), inset 0 0 10px rgba(34, 197, 94, 0.1);
+            background: rgba(255, 255, 255, 0.95);
+            transform: translateY(-4px) scale(1.01);
+        }
+
+        /* 🔘 ستایلی دوگمە گەشمۆدێڕنەکان */
+        .btn-cyber {
+            border-bottom: 4px solid rgba(0,0,0,0.2);
             transition: all 0.15s ease-in-out;
         }
-
-        .game-card:hover {
-            transform: translate(-4px, -4px);
-            box-shadow: 12px 12px 0px #000;
+        .btn-cyber:active {
+            transform: translateY(3px);
+            border-bottom-width: 1px;
         }
 
-        .badge-new {
-            background-color: #ff4d4d;
-            border: 2px solid #000;
-            box-shadow: 3px 3px 0px #000;
-        }
-
-        .badge-update {
-            background-color: #3b82f6;
-            border: 2px solid #000;
-            box-shadow: 3px 3px 0px #000;
-        }
-        .badge-who {
-            background-color: #20be00;
-            border: 2px solid #000;
-            box-shadow: 3px 3px 0px #000;
-        }
-
-        .btn-yellow { 
-            background-color: #ffcc00; 
-            border: 3px solid #000; 
-            box-shadow: 4px 4px 0px #000; 
+        .neon-text-glow {
+            text-shadow: 0 0 12px rgba(168, 85, 247, 0.25);
         }
     </style>
 </head>
 <body class="p-4 md:p-8">
 
+    <!-- بازنە درەوشاوەکانی پشتەوە -->
+    <div class="neon-bg-1"></div>
+    <div class="neon-bg-2"></div>
+
     <!-- هێدلاینی نوێکراوە -->
-    <header class="main-header px-4 py-3 md:px-8">
+    <!-- هێدلاینی نوێکراوە لەگەڵ لۆگۆیەکی سادە و مۆدێرن -->
+    <!-- هێدلاینی نوێکراوە لەگەڵ لۆگۆی تایبەت و دیزاین کراو -->
+    <!-- هێدلاینی نوێکراوە لەگەڵ لۆگۆیەکی سادە و مۆدێرن -->
+    <header class="main-header px-4 py-3 md:px-8 bg-white/50 backdrop-blur-md rounded-2xl border border-white/60 shadow-sm max-w-4xl mx-auto">
         <div class="max-w-6xl mx-auto flex justify-between items-center">
             
-            <!-- لۆگۆ و ناو -->
-            <div class="flex items-center gap-2 md:gap-3">
-                <div class="bg-yellow-400 border-2 border-black p-1 shadow-[2px_2px_0px_#000]">
-                    <span class="text-xl md:text-2xl font-black">🔔</span>
-                </div>
-                <h1 class="text-2xl md:text-4xl font-[900] tracking-tighter">زەنگ</h1>
+            <!-- لۆگۆ و ناوی سادە -->
+            <div class="flex items-center gap-3">
+                <!-- خاڵێکی نیۆنی درەوشاوەی سادە لەبری ئیمۆجی -->
+                <div class="w-3 h-3 rounded-full bg-purple-600 shadow-[0_0_10px_#a855f7] animate-pulse"></div>
+                <!-- ناوی براندەکە بە فۆنتی گەورە و سادە -->
+                <h1 class="text-2xl md:text-3xl font-[900] tracking-tight text-gray-800">زەنگ</h1>
             </div>
 
-            <!-- ئەم بەشە ئێستا لە مۆبایل و کۆمپیوتەریش دیارە -->
+            <!-- بەشی بەستەرەکان -->
             <div class="flex items-center gap-4">
-                <nav class="flex gap-4 font-black text-sm md:text-xl">
-                    <a href="index.html" class="hover:text-blue-600 border-b-2 border-transparent hover:border-blue-600 transition">سەرەکی</a>
-                    <a href="about.html" class="hover:text-blue-600 border-b-2 border-transparent hover:border-blue-600 transition">دەربارە</a>
+                <nav class="flex gap-6 font-black text-sm md:text-lg text-gray-700">
+                    <a href="index.html" class="text-purple-600 border-b-2 border-purple-600 pb-0.5 transition">سەرەکی</a>
+                    <a href="about.html" class="hover:text-purple-600 border-b-2 border-transparent hover:border-purple-600 pb-0.5 transition">دەربارە</a>
                 </nav>
-                
-                <!-- ڕەنگەکان - تەنها لە کۆمپیوتەر دیار بن بۆ ئەوەی جێگە نەگرن لە مۆبایل -->
-                <div class="hidden sm:flex gap-2">
-                    <div class="bg-[#ff4d4d] w-3 h-3 border-2 border-black rounded-full"></div>
-                    <div class="bg-[#22c55e] w-3 h-3 border-2 border-black rounded-full"></div>
-                    <div class="bg-[#3b82f6] w-3 h-3 border-2 border-black rounded-full"></div>
-                </div>
             </div>
 
         </div>
     </header>
 
-    <!-- کەمێک دووری بۆ ئەوەی ناوەڕۆکەکە نەکەوێتە ژێر هێدلاینەکە -->
+    <!-- ⚠️ ئەم ئەنیمەیشنە لە ناو ستایلی سەرەوەی لاپەڕەکەت (<style>) زیاد بکە: -->
+    <style>
+        @keyframes ringBell {
+            0%, 100% { transform: rotate(0deg); }
+            5%, 15%, 25% { transform: rotate(10deg); }
+            10%, 20%, 30% { transform: rotate(-10deg); }
+            35% { transform: rotate(0deg); }
+        }
+    </style>
     <div class="mt-8 md:mt-12"></div>
-    </header>
 
-    <main class="max-w-4xl mx-auto space-y-6 md:space-y-10">
+    <!-- مۆدێلی سەرەکی یارییەکان -->
+    <main class="max-w-4xl mx-auto space-y-6 md:space-y-8">
         
         <!-- یاری یەکەم: کێ فریودەرە -->
-        <a href="imposter/index.html" class="game-card p-6 md:p-8 block group border-red-500">
+        <a href="imposter/index.html" class="game-card-neon p-6 md:p-8 block rounded-2xl animate-f1 card-imposter group">
             <div class="flex justify-between items-start mb-4 md:mb-6">
-                <div class="text-6xl md:text-8xl group-hover:scale-105 transition">🃏</div>
-                <div class="badge-new text-white px-3 py-1 md:px-5 md:py-2 font-black text-sm md:text-lg">ئێستا بکەرەوە</div>
+                <div class="text-6xl md:text-7xl filter drop-shadow-md group-hover:rotate-6 transition-transform">🃏</div>
+                <div class="bg-red-500 text-white px-4 py-1.5 rounded-full font-black text-xs md:text-sm tracking-wide shadow-sm shadow-red-200">ئێستا بکەرەوە</div>
             </div>
-            <h2 class="text-3xl md:text-5xl font-[900] mb-2 md:mb-4">کێ فریودەرە؟</h2>
-            <p class="text-lg md:text-2xl font-bold text-gray-600 leading-snug">
+            <h2 class="text-2xl md:text-4xl font-[900] text-gray-800 mb-2 md:mb-3 group-hover:text-red-600 transition-colors">کێ فریودەرە؟</h2>
+            <p class="text-base md:text-xl font-bold text-gray-500/90 leading-relaxed">
                 هاوڕێکانت کۆبکەرەوە و بزانە کێ لە گروپەکەدا فێڵ دەکات و وشەکە نازانێت!
             </p>
             <div class="mt-6 md:mt-8">
-                <div class="btn-yellow inline-block px-6 py-2 md:px-10 md:py-4 font-black text-xl md:text-2xl">دەستپێکردن</div>
+                <div class="btn-cyber bg-gradient-to-r from-red-500 to-rose-500 text-white inline-block px-6 py-2.5 md:px-8 md:py-3.5 rounded-xl font-black text-lg md:text-xl shadow-lg shadow-red-500/20">دەستپێکردن ➔</div>
             </div>
         </a>
 
         <!-- یاری دووەم: راستی یان بوێری -->
-        <a href="truth-or-dare/index.html" class="game-card p-6 md:p-8 block group border-blue-500">
+        <a href="truth-or-dare/index.html" class="game-card-neon p-6 md:p-8 block rounded-2xl animate-f2 card-truth group">
             <div class="flex justify-between items-start mb-4 md:mb-6">
-                <div class="text-6xl md:text-8xl group-hover:scale-105 transition">🤫</div>
-                <div class="badge-update text-white px-3 py-1 md:px-5 md:py-2 font-black text-sm md:text-lg">تەواو بوو</div>
+                <div class="text-6xl md:text-7xl filter drop-shadow-md group-hover:rotate-6 transition-transform">🤫</div>
+                <div class="bg-blue-500 text-white px-4 py-1.5 rounded-full font-black text-xs md:text-sm tracking-wide shadow-sm shadow-blue-200">تەواو بوو</div>
             </div>
-            <h2 class="text-3xl md:text-5xl font-[900] mb-2 md:mb-4">راستی یان بوێری</h2>
-            <p class="text-lg md:text-2xl font-bold text-gray-600 leading-snug">
-                ئامادەی بۆ ئاشکراکردنی نهێنییەکان یان کردنی کارە بوێرەکان؟ بزانین کێ زاتی زیاترە!
+            <h2 class="text-2xl md:text-4xl font-[900] text-gray-800 mb-2 md:mb-3 group-hover:text-blue-600 transition-colors">راستی یان بوێری</h2>
+            <p class="text-base md:text-xl font-bold text-gray-500/90 leading-relaxed">
+                ئامادەی بۆ ئاشکراکردنی نهێنییەکان یان کردنی کارە بوێرەکان؟ بزانیم کێ زاتی زیاترە!
             </p>
             <div class="mt-6 md:mt-8">
-                <div class="btn-yellow inline-block px-6 py-2 md:px-10 md:py-4 font-black text-xl md:text-2xl">دەستپێکردن</div>
+                <div class="btn-cyber bg-gradient-to-r from-blue-500 to-indigo-500 text-white inline-block px-6 py-2.5 md:px-8 md:py-3.5 rounded-xl font-black text-lg md:text-xl shadow-lg shadow-blue-500/20">دەستپێکردن ➔</div>
             </div>
         </a>
+
         <!-- یاری سێیەم: کاممان زیاتر؟ -->
-        <a href= "most-likely/index.html" class="game-card p-6 md:p-8 block group border-green-500">
+        <a href="most-likely/index.html" class="game-card-neon p-6 md:p-8 block rounded-2xl animate-f3 card-likely group">
             <div class="flex justify-between items-start mb-4 md:mb-6">
-                <div class="text-6xl md:text-8xl group-hover:scale-105 transition">🤷🏻‍♂️</div>
-                <div class="badge-who text-white px-3 py-1 md:px-5 md:py-2 font-black text-sm md:text-lg">نوێ</div>
+                <div class="text-6xl md:text-7xl filter drop-shadow-md group-hover:rotate-6 transition-transform">🤷🏻‍♂️</div>
+                <div class="bg-green-500 text-white px-4 py-1.5 rounded-full font-black text-xs md:text-sm tracking-wide shadow-sm shadow-green-200">نوێ</div>
             </div>
-            <h2 class="text-3xl md:text-5xl font-[900] mb-2 md:mb-4">کاممان زیاتر؟  </h2>
-            <p class="text-lg md:text-2xl font-bold text-gray-600 leading-snug">
-             کێ لەم گروپە لە هەمووان ئەم سیفاتەی تێدا پێشنیار دەکرێت؟
+            <h2 class="text-2xl md:text-4xl font-[900] text-gray-800 mb-2 md:mb-3 group-hover:text-green-600 transition-colors">کاممان زیاتر؟</h2>
+            <p class="text-base md:text-xl font-bold text-gray-500/90 leading-relaxed">
+                کێ لەم گروپە لە هەمووان ئەم سیفاتەی تێدا پێشنیار دەکرێت؟
             </p>
             <div class="mt-6 md:mt-8">
-                <div class="btn-yellow inline-block px-6 py-2 md:px-10 md:py-4 font-black text-xl md:text-2xl">دەستپێکردن</div>
+                <div class="btn-cyber bg-gradient-to-r from-green-500 to-emerald-500 text-white inline-block px-6 py-2.5 md:px-8 md:py-3.5 rounded-xl font-black text-lg md:text-xl shadow-lg shadow-green-500/20">دەستپێکردن ➔</div>
             </div>
         </a>
-        
 
         <!-- بەم زوانە -->
-        <div class="game-card p-8 bg-[#d1d5db] border-dashed border-4 opacity-70">
+        <div class="bg-white/30 backdrop-blur-sm p-8 rounded-2xl border-2 border-dashed border-gray-300 opacity-60 flex items-center justify-between">
             <div class="flex items-center gap-4 md:gap-6">
-                <div class="text-5xl md:text-6xl grayscale">🔒</div>
+                <div class="text-5xl md:text-6xl filter grayscale">🔒</div>
                 <div>
-                    <h2 class="text-2xl md:text-4xl font-[900] text-gray-500">بەم زوانە...</h2>
-                    <p class="text-lg md:text-xl font-bold text-gray-400">خەریکی ئامادەکردنی یارییەکی نوێین</p>
+                    <h2 class="text-xl md:text-2xl font-[900] text-gray-600">بەم زوانە...</h2>
+                    <p class="text-sm md:text-lg font-bold text-gray-400">خەریکی ئامادەکردنی یارییەکی نوێین</p>
                 </div>
             </div>
         </div>
     </main>
 
-    <footer class="mt-16 text-center font-black text-gray-500">
-        &copy; 2026 ZANG  - ALL RIGHTS RESERVED
+    <footer class="mt-16 text-center font-black text-gray-400 tracking-wider text-sm">
+        &copy; 2026 ZANG - ALL RIGHTS RESERVED
     </footer>
 
 </body>
