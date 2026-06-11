@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="ku" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>بۆمبەری ووشەکان | زەنگ</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;700;900&display=swap');
+        
+        body {
+            font-family: 'Vazirmatn', sans-serif;
+            background: linear-gradient(135deg, #f3f4f6 0%, #eef2ff 50%, #fae8ff 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        .neon-bg-1 {
+            position: absolute;
+            width: 450px;
+            height: 450px;
+            background: radial-gradient(circle, rgba(168,85,247,0.12) 0%, rgba(99,102,241,0) 70%);
+            top: -5%;
+            left: -10%;
+            z-index: -1;
+        }
+
+        .game-card-neon {
+            background: rgba(255, 255, 255, 0.75);
+            backdrop-filter: blur(12px);
+            border: 2px solid rgba(255, 255, 255, 0.6);
+            border-bottom: 5px solid rgba(0, 0, 0, 0.15);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
+        }
+
+        .hidden-section { display: none !important; }
+
+        .btn-cyber {
+            border-bottom: 4px solid rgba(0,0,0,0.2);
+            transition: all 0.15s ease-in-out;
+        }
+        .btn-cyber:active {
+            transform: translateY(3px);
+            border-bottom-width: 1px;
+        }
+
+        /* 💣 ئەنیمەیشنی لێدانی بۆمب */
+        @keyframes bombPulse {
+            0% { transform: scale(1); filter: drop-shadow(0 0 10px rgba(239, 68, 68, 0.5)); }
+            50% { transform: scale(1.1); filter: drop-shadow(0 0 30px rgba(239, 68, 68, 0.9)); }
+            100% { transform: scale(1); filter: drop-shadow(0 0 10px rgba(239, 68, 68, 0.5)); }
+        }
+        .bomb-active { animation: bombPulse 1s infinite ease-in-out; }
+        .bomb-fast { animation: bombPulse 0.3s infinite ease-in-out; }
+
+        /* 🎰 ئەنیمەیشنی تێکەڵبوونی بابەتەکان */
+        @keyframes spinBlur {
+            0% { transform: translateY(-20px); opacity: 0.3; filter: blur(2px); }
+            100% { transform: translateY(0px); opacity: 1; filter: blur(0px); }
+        }
+        .spin-anim { animation: spinBlur 0.05s infinite alternate; }
+    </style>
+</head>
+<body class="p-4 md:p-8 flex flex-col items-center">
+
+    <div class="neon-bg-1"></div>
+
+    <header class="w-full max-w-4xl mx-auto mb-8 px-4 py-3 bg-white/50 backdrop-blur-md rounded-2xl border border-white/60 shadow-sm flex justify-between items-center">
+        <div class="flex items-center gap-3">
+            <div class="w-3 h-3 rounded-full bg-purple-500 shadow-[0_0_10px_#a855f7] animate-pulse"></div>
+            <h1 class="text-xl md:text-2xl font-[900] text-gray-800">بۆمبەری ووشەکان</h1>
+        </div>
+        <div class="flex items-center gap-4">
+            <nav class="flex gap-6 font-black text-sm md:text-lg text-gray-700">
+                <a href="../index.html" class="hover:text-purple-600 border-b-2 border-transparent hover:border-purple-600 pb-0.5 transition">➔ گەڕانەوە</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="w-full max-w-md mx-auto">
+
+        <div id="section-setup" class="game-card-neon p-6 md:p-8 rounded-2xl text-center">
+            <div class="text-6xl mb-4">💣</div>
+            <h2 class="text-2xl font-[900] mb-4 text-purple-600">کاتی بۆمبەکە دیاری بکە.</h2>
+            <p class="text-gray-500 font-bold mb-6 text-sm leading-relaxed">مۆبایلەکە دابنێ لە ناوەڕاست، یارییەکە خۆی ئاڕاستەی سووڕانەوەکە بۆ مەجلیسەکە دیاری دەکات. ووشە بڵێن بە خێرایی پێش تەقینەوە!</p>
+            
+            <div class="mb-8 bg-white/60 p-4 rounded-xl border border-gray-200">
+                <label class="block text-gray-700 font-black mb-3">کاتی یاری (بە چرکە):</label>
+                <div class="flex items-center justify-center gap-4">
+                    <button onclick="changeTime(-5)" class="w-12 h-12 bg-red-100 text-red-600 rounded-xl text-2xl font-black btn-cyber">5+</button>
+                    <span id="custom-time-display" class="text-4xl font-[900] text-gray-800 min-w-[80px]">30</span>
+                    <button onclick="changeTime(5)" class="w-12 h-12 bg-green-100 text-green-600 rounded-xl text-2xl font-black btn-cyber">5+</button>
+                </div>
+            </div>
+
+            <button onclick="startSpinning()" class="w-full btn-cyber bg-gradient-to-r from-purple-500 to-indigo-500 text-white py-4 rounded-xl font-[900] text-xl shadow-lg shadow-purple-500/20">دەستپێکردنی تیروپشک 🚀</button>
+        </div>
+
+        <div id="section-game" class="hidden-section text-center">
+            <div class="game-card-neon p-8 rounded-2xl mb-6 border-t-4 border-t-purple-500 flex flex-col items-center">
+                
+                <div id="bomb-emoji" class="text-7xl mb-4">💣</div>
+                <div id="timer-display" class="text-4xl font-[900] text-gray-800 mb-4 tracking-wider">00:30</div>
+                
+                <div id="direction-box" class="w-full bg-yellow-50 text-yellow-700 border border-yellow-200 py-2.5 px-4 rounded-xl font-black text-sm mb-4 transition-all opacity-0">
+                    🔄 ئاڕاستە: ...
+                </div>
+                
+                <div class="w-full border-t border-gray-200/60 pt-4 min-h-[110px] flex flex-col justify-center">
+                    <span id="status-badge" class="bg-purple-50 text-purple-600 px-4 py-1 rounded-full font-black text-xs tracking-wide mb-3 inline-block shadow-sm">خەریکی سووڕانەوەیە...</span>
+                    <h3 id="topic-text" class="text-3xl font-[900] text-gray-800 mt-1">...</h3>
+                </div>
+            </div>
+
+            <div class="flex flex-col gap-3">
+                <button onclick="resetGame()" class="w-full bg-white border border-gray-200 text-gray-500 hover:bg-gray-50 btn-cyber py-3 rounded-xl font-black text-sm">کۆتایی هێنان و گەڕانەوە 🛑</button>
+            </div>
+        </div>
+
+        <div id="section-explosion" class="hidden-section text-center">
+            <div class="game-card-neon p-8 rounded-2xl mb-6 bg-red-600 border-2 border-red-700 text-white shadow-2xl shadow-red-500/50">
+                <div class="text-9xl animate-ping my-6">💥</div>
+                <h2 class="text-4xl font-[900] mb-2 text-yellow-300">بووووم!!!</h2>
+                <p class="text-xl font-black mb-6">بۆمبەکە تەقییەوە! کێ نۆبەی بوو دۆڕا 😵</p>
+                
+                <button onclick="resetGame()" class="w-full btn-cyber bg-white text-red-600 py-4 rounded-xl font-[900] text-xl hover:bg-gray-100 shadow-lg">دووبارە یاریکردنەوە 🔄</button>
+            </div>
+        </div>
+
+    </main>
+
+    <footer class="mt-16 text-center font-black text-gray-400 tracking-wider text-sm w-full">
+        &copy; 2026 ZANG - ALL RIGHTS RESERVED
+    </footer>
+
+    <script>
+        let topics = [
+            // 🌟 بابەتە کلاسیکی و گشتییەکان
+            "دارستان 🌲", "چێشتخانە 🍳", "قوتابخانە 📝", "وڵاتان 🌍", "ناوەکانی کچان 👩", 
+            "ناوەکانی کوڕان 👦", "ئامێری کارەبایی 🔌", "خواردنەکان 🍔", "ئۆتۆمبێلەکان 🚗", 
+            "میوەکان 🍎", "وەرزشەکان ⚽", "فیلم و زنجیرەکان 🎬", "مۆبایل و تەکنەلۆجیا 📱", 
+            "ئاژەڵان 🦁", "جلووبەرگ 👕", "پیشەکان 👨‍🔧", "شارەکانی کوردستان 🏙️",
+            "کەلوپەلی ناو جانتا 🎒", "ئەپڵیکەیشنەکانی مۆبایل 🌐", "شتێک لە ئاسماندا هەبێت ☁️",
+            "کەلوپەلی حەمام 🛁", "براندەکانی جیهان 🏷️", "شتێک ڕەنگی سوور بێت 🔴", "سەوزەوات 🥦",
+
+            // 🍗 خواردن و مەتبەخی کوردی و خۆش
+            "خواردنی کوردی 🍲", "جۆرەکانی شیکەرەوە و شیرینی 🍰", "شتێک لە ناو سەلاجەدا هەیە 🧊", 
+            "کەلوپەلی چێشت لێنان 🥣", "شتێک تامی تاڵ بێت ☕", "شتێک زۆر توون و تیژ بێت 🌶️", 
+            "جۆرەکانی پسکیت و جپس 🍪", "شتێک بۆ بەیانیان دەخورێت 🍳", "ساردەمەنی و شەربەتەکان 🍹",
+            "شتێک لە دەورەی ساردەمەنی دەست دەکەوێت 🍦", "جۆرەکانی ترشیات و مەزە 🥒",
+
+            // 🏠 شتەکانی ناو ماڵ و حەوشە
+            "شتێک لە ناو دەولابی جلوبەرگدا هەیە 👔", "شتێک لە ژووری میواندا هەیە 🛋️", 
+            "کەلوپەلی پاککەرەوە (مەواد) 🧼", "شتێک لە حەوشە یان باڵکۆندا هەیە 🪴", 
+            "ئامێری ناو مەتبەخ  blender", "شتێک لەسەر مێزی خێزان هەیە 🍽️", 
+            "شتێک منداڵ پێی یاری دەکات 🧸", "شتێک لە دەرمانخانەی ماڵەوەدا هەیە 💊",
+
+            // 🚘 ناو بازاڕ، سەر شەقام و سەیارە
+            "ئامێری ناو سەیارە 📻", "شتێک لە ناو بەنزینخانەدا هەیە ⛽", 
+            "دووکانەکانی ناو بازاڕ 🛒", "شتێک لە ناو تەکسی یان پاسدا دەبینرێت 🚕", 
+            "براندەکانی مۆبایل و کۆمپیوتەر 💻", "یارییەکانی ناو پلەیستەیشن و کۆمپیوتەر 🎮", 
+            "شتێک لە ناو چێشتخانە (ڕێستۆرانت) دا هەیە 🍟", "شوێنی گەشتیاری لە کوردستان ⛰️",
+
+            // 🧠 سیفات، مەجلیس و شتی کۆمیدی (یەکجار خۆش بۆ یاری)
+            "سیفاتێکی خراپی مرۆڤ 👿", "سیفاتێکی باشی مرۆڤ 😇", "شتێک مرۆڤ لێی دەترسێت 👻", 
+            "شتێک پارەی زۆری دەوێت 💰", "شتێک کێشی زۆر قورس بێت 🏋️‍♂️", "جۆرەکانی ڕەنگ 🎨", 
+            "شتێک بۆنی زۆر خۆش بێت 🌸", "شتێک بۆنی ناخۆش بێت 🧦", "شتێک لە ئاودەست (توالێت) دا هەیە 🧻",
+            "جێگەیەک کە خەڵک تێیدا حەز بە بێدەنگی دەکات 🤫", "شتێک لە ناو دەست و باخەڵی پیاواندا هەیە 🔑",
+
+            // 🛠️ پیشە، ئامراز و خوێندن
+            "کەلوپەلی وەستایەتی و بیناسازی 🔨", "ماددەکانی قوتابخانە 📐", 
+            "پیشەیەک کە لە دەرەوە بێت 👷‍♂️", "شتێک لە زانکۆدا دەبینرێت 🎓", 
+            "کەلوپەلی ناو پۆلی خوێندن 🪟", "ئامرازی نووسین و وێنەکێشان ✏️",
+
+            // 🌍 سروشت و زانست و جیهان
+            "باڵندەکان 🦅", "حەشەرات و مێرووەکان 🐜", "گیانەوەرە دەریاییەکان 🦈", 
+            "جۆرەکانی دار و گوڵ 🌹", "دیاردە سروشتییەکان (وەک باران و با) ⛈️", 
+            "زمانەکانی جیهان 🗣️", "ناسا و گەردوون (هەسارەکان) 🚀", "شتێک کە مرۆڤ دەتوانێت مەلەوانی تێدا بکات 🏊‍♂️",
+
+            // 🎭 شتی تر و جۆراوجۆر
+            "ئامێرە مۆسیقییەکان 🎸", "جۆرەکانی وەرزش بەبێ تۆپ 🏃‍♂️", "کارەکتەری کارتۆنی کۆن یان نوێ 🦸‍♂️", 
+            "شتێک کە تەنها لە زستاندا بەکاردێت 🧥", "شتێک کە تەنها لە هاویندا بەکاردێت 🩳", 
+            "میدیای کۆمەڵایەتی (سۆشیاڵ میدیا) 📱", "شتێک بە دوگمە کار دەکات 🔘", "شتێک لە شوشە دروستکرابێت 🧪",
+            "شتێک کە دەتوانیت بیپۆشیت (جگە لە جل) ⌚", "شتێک کە لە ناو جزدانی پارەدا هەیە 💳",
+            "شتێک کە کچی پێ جوان دەبێت 💄", "شتێک کە پێویستی بە پاتری هەیە 🔋",
+            "شتێک کە لە کاتی خەودا بەکاردێت 🛌", "شتێک کە لە ناو قاوەخانەدا هەیە ☕",
+            "وەرزشوان یان یاریزانە بەناوبانگەکان 🏆", "گۆرانیبێژەکان (کوردی یان جیهانی) 🎤",
+            "شتێک مرۆڤ پێی دڵخۆش دەبێت 🎉", "شتێک مرۆڤ پێی بێزار دەبێت 😮‍💨",
+            "شتێک پزیشک (دکتۆر) بەکاری دەهێنێت 🩺", "جۆرەکانی چەک یان کەرەستەی شەڕ ⚔️",
+            "شتێک کە دەفڕێت ✈️", "شتێک کە کلکی هەبێت 🐕", "شتێک کە زۆر تیژ بێت (ببڕێت) 🔪",
+            "شتێک ڕەنگی زەرد بێت 💛", "شتێک ڕەنگی شین بێت 💙", "شتێک ڕەنگی ڕەش بێت 🖤"
+        ];
+
+        let chosenDuration = 30;
+        let timeLeft = 30;
+        let timer = null;
+        let spinInterval = null;
+        let countdownTimer = null;
+        
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+
+        function playSound(freq, type, duration, volume = 0.1) {
+            try {
+                let osc = audioCtx.createOscillator();
+                let gain = audioCtx.createGain();
+                osc.type = type; osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+                gain.gain.setValueAtTime(volume, audioCtx.currentTime);
+                osc.connect(gain); gain.connect(audioCtx.destination);
+                osc.start(); osc.stop(audioCtx.currentTime + duration);
+            } catch(e) {}
+        }
+
+        function playHugeExplosion() {
+            try {
+                for (let i = 0; i < 3; i++) {
+                    let osc = audioCtx.createOscillator(); let gain = audioCtx.createGain();
+                    osc.type = i === 0 ? "sawtooth" : "square";
+                    osc.frequency.setValueAtTime(160 - (i * 30), audioCtx.currentTime);
+                    osc.frequency.exponentialRampToValueAtTime(10, audioCtx.currentTime + 1.5);
+                    gain.gain.setValueAtTime(0.6, audioCtx.currentTime);
+                    gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 1.5);
+                    osc.connect(gain); gain.connect(audioCtx.destination);
+                    osc.start(); osc.stop(audioCtx.currentTime + 1.5);
+                }
+            } catch(e) {}
+        }
+
+        function changeTime(amount) {
+            chosenDuration += amount;
+            if (chosenDuration < 10) chosenDuration = 10;
+            if (chosenDuration > 120) chosenDuration = 120;
+            document.getElementById('custom-time-display').innerText = chosenDuration;
+        }
+
+        function showSection(id) {
+            document.getElementById('section-setup').classList.add('hidden-section');
+            document.getElementById('section-game').classList.add('hidden-section');
+            document.getElementById('section-explosion').classList.add('hidden-section');
+            document.getElementById(id).classList.remove('hidden-section');
+        }
+
+        function startSpinning() {
+            timeLeft = chosenDuration;
+            showSection('section-game');
+            
+            document.getElementById('direction-box').classList.add('opacity-0');
+            document.getElementById('status-badge').innerText = "🎰 خەریکی هەڵبژاردنی بابەت...";
+            document.getElementById('topic-text').classList.add('spin-anim');
+            document.getElementById('bomb-emoji').innerText = "🎰";
+            document.getElementById('timer-display').innerText = "⏱️";
+
+            let counter = 0;
+            let speed = 50;
+
+            function spin() {
+                counter++;
+                let randomTopic = topics[Math.floor(Math.random() * topics.length)];
+                document.getElementById('topic-text').innerText = randomTopic;
+                playSound(300 + (counter * 10), "sine", 0.03, 0.05);
+
+                if (counter > 30) {
+                    clearInterval(spinInterval);
+                    speed += 60;
+                    if (speed < 400) {
+                        spinInterval = setInterval(spin, speed);
+                    } else {
+                        // کاتێک لەسەر بابەتەکە وەستا، دەست دەکات بە وەستانی ٣ چرکەییەکە
+                        setTimeout(startThreeSecondCountdown, 500);
+                    }
+                }
+            }
+            spinInterval = setInterval(spin, speed);
+        }
+
+        // ⏱️ لێرەدا ٣ چرکە دەوەستێت پێش ئەوەی کاتەکە بڕوات
+        function startThreeSecondCountdown() {
+            document.getElementById('topic-text').classList.remove('spin-anim');
+            document.getElementById('status-badge').innerText = "⏳ ئامادەباشی...";
+            document.getElementById('bomb-emoji').innerText = "👀";
+            
+            // دیاریکردنی ئاڕاستەی میلی کاتژمێر
+            let directions = [
+                "🔄 بە ئاڕاستەی میلی کاتژمێر بخولێنەوە",
+                "↩️ بە پێچەوانەی میلی کاتژمێر بخولێنەوە"
+            ];
+            let randomDir = directions[Math.floor(Math.random() * directions.length)];
+            let dirBox = document.getElementById('direction-box');
+            dirBox.innerText = randomDir;
+            dirBox.classList.remove('opacity-0');
+
+            let count = 3;
+            document.getElementById('timer-display').innerText = `⚠️ ${count}`;
+            playSound(500, "triangle", 0.2, 0.15);
+
+            countdownTimer = setInterval(() => {
+                count--;
+                if (count > 0) {
+                    document.getElementById('timer-display').innerText = `⚠️ ${count}`;
+                    playSound(500, "triangle", 0.2, 0.15);
+                } else {
+                    clearInterval(countdownTimer);
+                    actualStartGame(); // دوای ٣ چرکە، یارییەکە دەستپێدەکات
+                }
+            }, 1000);
+        }
+
+        function actualStartGame() {
+            document.getElementById('status-badge').innerText = "💣 بۆمبەکە چالاکە! خێرا کات ڕۆشت...";
+            document.getElementById('bomb-emoji').innerText = "💣";
+            document.getElementById('bomb-emoji').className = "text-7xl mb-4 bomb-active";
+            
+            updateTimerDisplay();
+            playSound(850, "triangle", 0.5, 0.25); // دەنگی فیکەی دەستپێکردن
+
+            if (timer) clearInterval(timer);
+            timer = setInterval(countDown, 1000);
+        }
+
+        function countDown() {
+            timeLeft--;
+            updateTimerDisplay();
+
+            if (timeLeft <= 7) {
+                document.getElementById('bomb-emoji').className = "text-7xl mb-4 bomb-fast";
+                playSound(700, "sine", 0.15, 0.15);
+            } else {
+                playSound(450, "sine", 0.05, 0.08);
+            }
+
+            if (timeLeft <= 0) {
+                clearInterval(timer);
+                explodeBomb();
+            }
+        }
+
+        function updateTimerDisplay() {
+            let minutes = Math.floor(timeLeft / 60);
+            let seconds = timeLeft % 60;
+            document.getElementById('timer-display').innerText = 
+                `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+        }
+
+        function explodeBomb() {
+            playHugeExplosion();
+            showSection('section-explosion');
+        }
+
+        function resetGame() {
+            if (timer) clearInterval(timer);
+            if (spinInterval) clearInterval(spinInterval);
+            if (countdownTimer) clearInterval(countdownTimer);
+            showSection('section-setup');
+        }
+    </script>
+</body>
+</html>

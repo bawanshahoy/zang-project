@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="ku" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>شیرینی پڕۆژەکە | زەنگ</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;700;900&display=swap');
+        
+        body {
+            font-family: 'Vazirmatn', sans-serif;
+            background: linear-gradient(135deg, #f3f4f6 0%, #eef2ff 50%, #fae8ff 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* 🌟 کاریگەری ڕەنگی بریقەدار لە پشتەوە */
+        .neon-bg-gold {
+            position: absolute;
+            width: 450px;
+            height: 450px;
+            background: radial-gradient(circle, rgba(245, 158, 11, 0.15) 0%, rgba(99, 102, 241, 0) 70%);
+            top: -10%;
+            right: -10%;
+            z-index: -1;
+        }
+
+        .game-card-neon {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(16px);
+            border: 2px solid rgba(255, 255, 255, 0.7);
+            border-bottom: 6px solid rgba(0, 0, 0, 0.12);
+            box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.05);
+        }
+
+        /* ✨ کاریگەری جوڵانی دوگمەکان */
+        .btn-cyber {
+            border-bottom: 4px solid rgba(0,0,0,0.18);
+            transition: all 0.15s ease-in-out;
+        }
+        .btn-cyber:active {
+            transform: translateY(3px);
+            border-bottom-width: 1px;
+        }
+
+        .donate-row {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .donate-row:hover {
+            transform: scale(1.02) translateY(-2px);
+            background: rgb(255, 251, 235);
+            border-color: #f59e0b;
+            box-shadow: 0 10px 20px -10px rgba(245, 158, 11, 0.3);
+        }
+    </style>
+</head>
+<body class="p-4 md:p-8 flex flex-col items-center">
+
+    <div class="neon-bg-gold"></div>
+
+    <header class="w-full max-w-4xl px-4 py-3 md:px-8 bg-white/50 backdrop-blur-md rounded-2xl border border-white/60 shadow-sm mx-auto">
+        <div class="flex justify-between items-center">
+            <div class="flex items-center gap-3">
+                <div class="w-3 h-3 rounded-full bg-amber-500 shadow-[0_0_10px_#eab308] animate-pulse"></div>
+                <h1 class="text-2xl md:text-3xl font-[900] tracking-tight text-gray-800">زەنگ</h1>
+            </div>
+            <div class="flex items-center gap-4">
+                <nav class="flex gap-4 md:gap-6 font-black text-sm md:text-lg text-gray-700">
+                    <a href="index.html" class="hover:text-purple-600 border-b-2 border-transparent hover:border-purple-600 pb-0.5 transition">سەرەکی</a>
+                    <a href="about.html" class="hover:text-red-600 border-b-2 border-transparent hover:border-red-600 pb-0.5 transition">دەربارە</a>
+                    <a href="donation.html" class="text-amber-500 border-b-2 border-amber-500 pb-0.5 transition">شیرینی</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <main class="w-full max-w-xl mx-auto mt-12 md:mt-16">
+        <div class="game-card-neon p-6 md:p-8 rounded-3xl border-t-4 border-t-amber-500 relative overflow-hidden">
+            
+            <div class="absolute -top-10 -left-10 w-32 h-32 bg-amber-500/10 rounded-full blur-xl"></div>
+
+            <div class="text-6xl text-center mb-4 filter drop-shadow-sm">🍰🪙</div>
+            <h2 class="text-2xl md:text-3xl font-[900] text-center text-amber-600 mb-2">شیرینی پرۆگرامەر</h2>
+            <p class="text-gray-500 font-bold text-center text-sm md:text-base leading-relaxed mb-8 px-2">
+                ئەگەر لە مەجلیسەکەتاندا کاتێکی خۆشتان بەسەر برد و زۆر پێکەنین، لێرەوە دەتوانیت بە دڵخوازی خۆت شیرینییەکی پیاوانە بنێریت بۆ ماندووبوونی گەشەپێدەرەکە! 
+            </p>
+
+            <div class="space-y-4">
+                
+                <a href="https://fastpay.cash/transfer?to=07506310121&amount=1000" target="_blank" class="donate-row flex items-center justify-between bg-white/90 p-4 rounded-2xl border border-gray-200/80 transition group">
+                    <div class="flex items-center gap-4">
+                        <div class="text-4xl group-hover:rotate-12 transition-transform bg-amber-50 p-2.5 rounded-xl">☕</div>
+                        <div>
+                            <h3 class="font-black text-gray-800 text-base">چایەکی قەتران و حێل</h3>
+                            <p class="text-xs font-bold text-gray-400 mt-0.5">بۆ هێشتنەوەی مێشک بە بەئاگایی</p>
+                        </div>
+                    </div>
+                    <div class="bg-amber-500 text-white text-sm font-black px-4 py-2.5 rounded-xl btn-cyber shadow-md shadow-amber-500/10">١,٠٠٠ د.ع</div>
+                </a>
+
+                <a href="https://fastpay.cash/transfer?to=07506310121&amount=2500" target="_blank" class="donate-row flex items-center justify-between bg-white/90 p-4 rounded-2xl border border-gray-200/80 transition group">
+                    <div class="flex items-center gap-4">
+                        <div class="text-4xl group-hover:rotate-12 transition-transform bg-amber-50 p-2.5 rounded-xl">🍰</div>
+                        <div>
+                            <h3 class="font-black text-gray-800 text-base">کێک و شەربەتێکی سارد</h3>
+                            <p class="text-xs font-bold text-gray-400 mt-0.5">شیرینییەکی سووک بۆ دوای مەجلیس</p>
+                        </div>
+                    </div>
+                    <div class="bg-amber-500 text-white text-sm font-black px-4 py-2.5 rounded-xl btn-cyber shadow-md shadow-amber-500/10">٢,٥٠٠ د.ع</div>
+                </a>
+
+                <a href="https://fastpay.cash/transfer?to=07506310121&amount=5000" target="_blank" class="donate-row flex items-center justify-between bg-white/90 p-4 rounded-2xl border border-gray-200/80 transition group">
+                    <div class="flex items-center gap-4">
+                        <div class="text-4xl group-hover:rotate-12 transition-transform bg-amber-50 p-2.5 rounded-xl">🍔</div>
+                        <div>
+                            <h3 class="font-black text-gray-800 text-base">ژەمە خۆراکێکی خێرا</h3>
+                            <p class="text-xs font-bold text-gray-400 mt-0.5">بۆ ئەوەی پڕۆژەکە نەوەستێت و بەردەوام بێت</p>
+                        </div>
+                    </div>
+                    <div class="bg-amber-500 text-white text-sm font-black px-4 py-2.5 rounded-xl btn-cyber shadow-md shadow-amber-500/10">٥,٠٠٠ د.ع</div>
+                </a>
+
+            </div>
+
+            <div class="mt-8 border-t border-gray-200/60 pt-4 text-center">
+                <p class="text-xs text-gray-400 font-black tracking-wide">پشتیوانیکردنی پڕۆژە لۆکاڵییەکان هەمیشە مەجلیسەکان ئاوەدان دەکاتەوە 🤝</p>
+            </div>
+        </div>
+    </main>
+
+    <footer class="mt-16 text-center font-black text-gray-400 tracking-wider text-sm w-full">
+        &copy; 2026 ZANG - ALL RIGHTS RESERVED
+    </footer>
+
+</body>
+</html>
