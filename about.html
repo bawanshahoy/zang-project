@@ -2,7 +2,7 @@
 <html lang="ku" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>دەربارە | زەنگ</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
@@ -12,11 +12,12 @@
             font-family: 'Vazirmatn', sans-serif;
             background: linear-gradient(135deg, #f3f4f6 0%, #eef2ff 50%, #fae8ff 100%);
             min-height: 100vh;
-            overflow-x: hidden;
+            overflow-x: hidden; /* ڕێگری تەواو لە جوڵان بۆ ڕاست و چەپ */
             position: relative;
+            width: 100%;
         }
 
-        /* 🔮 ڕووناکی نەرمی نیۆن لە پشتەوە */
+        /* 🔮 ڕووناکی پشتەوە بەبێ جووڵە و ئەنیمەیشن */
         .neon-bg-1 {
             position: absolute;
             width: 450px;
@@ -25,7 +26,6 @@
             top: -5%;
             left: -10%;
             z-index: -1;
-            animation: pulseGlow 6s infinite alternate;
         }
         .neon-bg-2 {
             position: absolute;
@@ -35,23 +35,9 @@
             bottom: 5%;
             right: -10%;
             z-index: -1;
-            animation: pulseGlow 9s infinite alternate-reverse;
         }
 
-        @keyframes pulseGlow {
-            0% { transform: scale(1); opacity: 0.7; }
-            100% { transform: scale(1.15); opacity: 1; }
-        }
-
-        /* ✨ ئەنیمەیشنی لەرینەوەی نەرم */
-        @keyframes float-card {
-            0% { transform: translateY(0px); }
-            100% { transform: translateY(-8px); }
-        }
-        .animate-f1 { animation: float-card 4s ease-in-out infinite alternate; }
-        .animate-f2 { animation: float-card 4.5s ease-in-out infinite alternate 0.3s; }
-
-        /* 🎛️ دیزاینی کارتە شووشەییە نوێیەکان */
+        /* 🎛️ دیزاینی کارتە شووشەییەکان بە تەواو سابتی */
         .about-card-neon {
             background: rgba(255, 255, 255, 0.75);
             backdrop-filter: blur(12px);
@@ -60,14 +46,10 @@
             box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
         }
 
-        /* 🔘 ستایلی دوگمەکان */
+        /* 🔘 ستایلی دوگمەکان تەنها لە کاتی داگرتندا کەمێک دەچنە خوارەوە */
         .btn-cyber {
             border-bottom: 3px solid rgba(0,0,0,0.15);
-            transition: all 0.2s ease-in-out;
-        }
-        .btn-cyber:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: all 0.1s ease-in-out;
         }
         .btn-cyber:active {
             transform: translateY(1px);
@@ -98,7 +80,7 @@
 
     <main class="max-w-3xl mx-auto mt-12 md:mt-16">
         
-        <div class="about-card-neon p-6 md:p-10 rounded-2xl animate-f1 relative overflow-hidden mb-6">
+        <div class="about-card-neon p-6 md:p-10 rounded-2xl relative overflow-hidden mb-6">
             
             <h1 class="text-4xl md:text-5xl font-[900] text-purple-900 mb-6">دەربارەی زەنگ</h1>
             
@@ -118,7 +100,7 @@
                         👨‍💻
                     </div>
                     <div>
-                        <p class="text-2xl font-[900] text-gray-800">باوان شاهۆیی</p>
+                        <p class="text-2xl font-[900] text-gray-800">ibawan</p>
                         <p class="text-base text-purple-500 font-black">Developer & Creator</p>
                     </div>
                 </div>
@@ -145,7 +127,7 @@
 
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 animate-f2">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
             
             <div class="about-card-neon p-5 rounded-2xl border-t-4 border-t-green-500">
                 <h3 class="text-lg font-[900] text-green-700 mb-1 flex items-center gap-1.5">🎯 ئامانجمان</h3>

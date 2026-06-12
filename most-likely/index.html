@@ -16,7 +16,7 @@
             position: relative;
         }
 
-        /* 🔮 ڕووناکی نەرمی نیۆن لە پشتەوە - ڕەنگی سەوز */
+        /* 🔮 ڕووناکی پشتەوە - تەواو جێگیر */
         .neon-bg-1 {
             position: absolute;
             width: 450px;
@@ -27,7 +27,7 @@
             z-index: -1;
         }
 
-        /* 🎛️ دیزاینی نوێی کارتەکان بە ستایلی درەوشانەوەی گەشاوە */
+        /* 🎛️ دیزاینی کارتەکان بە شێوازی لێڵ (Glassmorphism) */
         .game-card-neon {
             background: rgba(255, 255, 255, 0.75);
             backdrop-filter: blur(12px);
@@ -38,14 +38,26 @@
 
         .hidden-section { display: none !important; }
 
-        /* 🔘 ستایلی دوگمە گەشمۆدێڕنەکان */
+        /* 🔘 ستایلی دوگمەکان */
         .btn-cyber {
             border-bottom: 4px solid rgba(0,0,0,0.2);
-            transition: all 0.15s ease-in-out;
+            transition: transform 0.1s ease-in-out, border-width 0.1s ease-in-out;
         }
         .btn-cyber:active {
             transform: translateY(3px);
             border-bottom-width: 1px;
+        }
+
+        .category-btn {
+            background: rgba(255, 255, 255, 0.5);
+            border: 2px solid rgba(229, 231, 235, 1);
+            transition: all 0.2s ease;
+        }
+        .category-btn.selected {
+            background: rgba(34, 197, 94, 0.1);
+            border-color: #22c55e;
+            color: #15803d;
+            box-shadow: 0 0 15px rgba(34, 197, 94, 0.15);
         }
     </style>
 </head>
@@ -58,35 +70,48 @@
             <div class="w-3 h-3 rounded-full bg-green-500 shadow-[0_0_10px_#22c55e] animate-pulse"></div>
             <h1 class="text-xl md:text-2xl font-[900] text-gray-800">کاممان زیاتر؟</h1>
         </div>
-        <div class="flex items-center gap-4">
-            <nav class="flex gap-6 font-black text-sm md:text-lg text-gray-700">
-                <a href="../index.html" class="hover:text-green-600 border-b-2 border-transparent hover:border-green-600 pb-0.5 transition">➔ گەڕانەوە</a>
-            </nav>
-        </div>
+        <nav class="flex gap-4 font-black text-sm md:text-base text-gray-700">
+            <a href="../index.html" class="hover:text-green-600 transition">➔ گەڕانەوە</a>
+        </nav>
     </header>
 
-    <main class="w-full max-w-md mx-auto">
+    <main class="w-full max-w-xl mx-auto">
 
         <div id="section-setup" class="game-card-neon p-6 md:p-8 text-center rounded-2xl">
-            <h1 class="text-3xl font-[900] mb-6 border-b border-gray-200/60 pb-4 text-green-600">کاممان زیاتر؟ 🤔</h1>
-            <p class="text-gray-600 font-bold mb-6 leading-relaxed">یاسا: پرسیارێک دێتە سەر شاشە، بە ٣، ٢، ١ دەبێت هەمووان بە دەست ئاماژە بۆ ئەو کەسە بکەن کە پرسیارەکە لەسەر ئەوە کڵاس دەکات!</p>
+            <h1 class="text-3xl font-[900] mb-4 border-b border-gray-200/60 pb-4 text-green-600">کاممان زیاتر؟ 🤔</h1>
+            <p class="text-gray-600 font-bold mb-6 leading-relaxed">یاسا: پرسیارێک دێتە سەر شاشە، بە لێدانی ژمارەی پێچەوانە (٣، ٢، ١) دەبێت هەمووان بە دەست ئاماژە بۆ ئەو کەسە بکەن کە پرسیارەکە لەسەر ئەو دەگونجێت!</p>
             
-            <button onclick="startGame()" class="w-full btn-cyber bg-gradient-to-r from-green-500 to-emerald-500 text-white py-4 rounded-xl font-[900] text-xl md:text-2xl shadow-lg shadow-green-500/20">دەستپێکردنی یاری 🚀</button>
+            <button onclick="goToCategories()" class="w-full btn-cyber bg-gradient-to-r from-green-500 to-emerald-500 text-white py-4 rounded-xl font-[900] text-xl shadow-lg shadow-green-500/20">دواتر ➔</button>
+        </div>
+
+        <div id="section-categories" class="hidden-section game-card-neon p-6 md:p-8 rounded-2xl">
+            <h2 class="text-2xl font-[900] mb-6 text-gray-800 text-center border-b border-gray-200/60 pb-4">جۆری پرسیارەکان هەڵبژێرە</h2>
+            
+            <div class="space-y-4">
+                <p class="font-black text-lg text-gray-700">پۆلەکان (Categories):</p>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+                    <button onclick="toggleCat('cat_normal')" id="cat_normal" class="category-btn p-4 rounded-xl font-bold text-center">😊 گشتی / ئاسایی</button>
+                    <button onclick="toggleCat('cat_social')" id="cat_social" class="category-btn p-4 rounded-xl font-bold text-center">📱 کۆمەڵایەتی</button>
+                    <button onclick="toggleCat('cat_crazy')" id="cat_crazy" class="category-btn p-4 rounded-xl font-bold text-center">🤪 شێتانە و قورس</button>
+                </div>
+            </div>
+            
+            <button onclick="startGame()" class="w-full mt-8 btn-cyber bg-gradient-to-r from-green-500 to-emerald-500 text-white py-4 rounded-xl font-[900] text-xl shadow-lg shadow-green-500/20">دەستپێکردنی یاری 🎲</button>
         </div>
 
         <div id="section-game" class="hidden-section w-full text-center">
-            <div class="game-card-neon p-8 min-h-[250px] flex flex-col justify-center items-center mb-6 rounded-2xl border-t-4 border-t-green-500">
-                <span class="bg-green-50 text-green-600 px-4 py-1 rounded-full font-black text-xs tracking-wide mb-4 inline-block shadow-sm">پرسیار</span>
-                <h2 id="question-text" class="text-2xl md:text-3xl font-[900] text-gray-800 leading-relaxed">...</h2>
+            <div class="game-card-neon p-8 min-h-[260px] flex flex-col justify-center items-center mb-6 rounded-2xl border-t-4 border-t-green-500">
+                <span id="question-badge" class="bg-green-50 text-green-600 px-5 py-1.5 rounded-full font-black text-sm tracking-wide mb-6 inline-block shadow-sm">...</span>
+                <h2 id="question-text" class="text-2xl md:text-3xl font-[900] text-gray-800 leading-relaxed px-2">...</h2>
             </div>
 
-            <div id="countdown-box" class="hidden game-card-neon p-4 bg-red-50/80 border border-red-200 text-red-600 mb-6 font-black text-2xl rounded-xl shadow-inner">
-                ئاماژە بکە لە دوای: <span id="countdown-number" class="text-red-700 font-[900]">٣</span>
+            <div id="countdown-box" class="hidden game-card-neon p-5 bg-red-50/80 border border-red-200 text-red-600 mb-6 font-black text-2xl rounded-2xl shadow-inner transition-all">
+                ئاماژە بکە لە دوای: <span id="countdown-number" class="text-red-700 font-[900] mx-1">٣</span>
             </div>
 
             <div class="flex gap-4">
-                <button onclick="startCountdown()" class="flex-1 bg-gray-50 border border-gray-200 text-gray-700 hover:bg-gray-100 btn-cyber py-4 rounded-xl font-black text-base md:text-lg transition-all">ژمارەی پێچەوانە ⏱️</button>
-                <button onclick="nextQuestion()" class="flex-1 btn-cyber bg-gradient-to-r from-green-500 to-emerald-500 text-white py-4 rounded-xl font-black text-base md:text-lg shadow-md shadow-green-500/10">پرسیاری دواتر ➔</button>
+                <button onclick="startCountdown()" class="flex-1 bg-white border-2 border-gray-200 text-gray-700 hover:bg-gray-50 btn-cyber py-4 rounded-xl font-black text-lg transition-all">ژمارەی پێچەوانە ⏱️</button>
+                <button onclick="nextQuestion()" class="flex-1 btn-cyber bg-gray-900 text-white py-4 rounded-xl font-black text-lg hover:bg-black transition-all">پرسیاری دواتر ➔</button>
             </div>
         </div>
 
@@ -97,55 +122,204 @@
     </footer>
 
     <script>
-        let questions = [
-            "کێ لە هەمووان زیاتر ئەگەری هەیە ببێتە ملیۆنێر؟ 💰",
-            "کێ لە هەمووان زیاتر مۆبایلەکەی لە دەست دەکەوێت و دەشکێت؟ 📱",
-            "کێ لە هەمووان زیاتر بەبێ هۆکار لە ناو چاتدا تووڕە دەبێت؟ 😡",
-            "کێ لە هەمووان زیاتر کاتەکانی بە خەو بەسەر دەبات؟ 😴",
-            "کێ ئەگەری زیاترە لە کاتی ڕۆشتن لە سەر شەقام بکەوێت؟ 🚶‍♂️",
-            "کێ لە هەمووان زیاتر بە دزییەوە سەیری مۆبایلی دەوروبەری دەکات؟ 👁️",
-            "کێ ئەگەری زیاترە بچێتە چێشتخانەیەک و لە کۆتاییدا پارەی پێ نەبێت؟ 🍽️",
-            "کێ لە هەمووان زیاتر عاشقی خواردنی توون و تیژە؟ 🌶️",
-            "کێ لە هەمووان زیاتر درەنگ وەڵامی نامە دەداتەوە؟ ⏳",
-            "کێ ئەگەری زیاترە لە تاقیکردنەوەدا فێڵ (قۆپیش) بکات و بگیرێت؟ 📝",
-            "کێ لە هەمووان زیاتر لێخوڕینی ئۆتۆمبێلی خراپە؟ 🚗",
-            "کێ زۆرترین کات لەبەردەم ئاوێنەدا بەسەر دەبات؟ 🪞",
-            "کێ لە هەمووان زیاتر حەزی لە قسەی نەستەق و کۆنە؟ 👴",
-            "کێ ئەگەری زیاترە گۆرانی bڵێت کاتێک لە حەمامە؟ 🎤",
-            "کێ لە هەمووان زیاتر بە شتی بچووک پێدەکەنێت؟ 😂",
-            "کێ ئەگەری زیاترە لە فیلمێکی ترسناکدا لە ترسا چاوی دابخات؟ 🍿",
-            "کێ لە هەمووان دەوڵەمەنتر دەبێت لە داهاتوودا؟ 💎",
-            "کێ لە هەمووان زیاتر پۆستی سێریاس و فەلسەفی دەکات؟ 🧠",
-            "کێ ئەگەری زیاترە لە گەشتێکدا ڕێگا ون بکات؟ 🗺️",
-            "کێ زۆرترین پارە بە خواردنی دەرەوە دەدات؟ 🍔"
-        ];
-
+        let selectedCats = [];
         let usedQuestions = [];
+        let countdownInterval = null;
 
-        function showSection(id) {
-            document.getElementById('section-setup').classList.add('hidden-section');
-            document.getElementById('section-game').classList.add('hidden-section');
-            document.getElementById(id).classList.remove('hidden-section');
+        const questionsData = {
+    cat_normal: [
+        "کێ لە هەمووان زیاتر ئەگەری هەیە ببێتە ملیۆنێر؟ 💰",
+        "کێ لە هەمووان زیاتر کاتەکانی بە خەو بەسەر دەبات؟ 😴",
+        "کێ ئەگەری زیاترە لە کاتی ڕۆشتن لە سەر شەقام بکەوێت؟ 🚶‍♂️",
+        "کێ لە هەمووان زیاتر عاشقی خواردنی توون و تیژە؟ 🌶️",
+        "کێ زۆرترین کات لەبەردەم ئاوێنەدا بەسەر دەبات؟ 🪞",
+        "کێ لە هەمووان زیاتر بە شتی بچووک پێدەکەنێت؟ 😂",
+        "کێ زۆرترین پارە بە خواردنی دەرەوە دەدات؟ 🍔",
+        "کێ لە هەمووان تەمبەڵترە لە پاککردنەوەی ژوورەکەیدا? 🧹",
+        "کێ زیاتر شت لە بیر دەکات؟ 🧠",
+        "کێ لە هەمووان زیاتر تەمبەڵە لە وەرزش کردن؟ 🏋️‍♂️",
+        "کێ کاتێک پێدەکەنێت دەنگی زۆر سەیر لە خۆی دەردەکات؟ 🐷",
+        "کێ لە هەمووان زیاتر حەزی لە چای شیرینە؟ ☕",
+        "کێ زیاتر لە پێویست بۆڵەبۆڵ دەکات کاتێک بەیانیان بەخەبەر دێت؟ 🌅",
+        "کێ لە هەمووان زیاتر پەلەپەل دەکات لە کاتی نانخواردندا؟ 🍽️",
+        "کێ زۆرترین جلوبەرگ دەکڕێت و ناپۆشێت؟ 👗",
+        "کێ لە هەمووان زیاتر حەزی لە سەیرکردنی ئەنیمێ یان کارتۆنە؟ ⚡",
+        "کێ ئەگەری هەیە بچێتە بازاڕ تەنها بۆ پیاسە و هیچ نەکڕێت؟ 🛍️",
+        "کێ لە هەمووان زیاتر حەزی لە بەخێوکردنی پشیلەیە؟ 🐱",
+        "کێ کاتێک دەچێتە دەرەوە نیو کاتژمێر تەنها خەریکی قژ داهێنانە؟ 🪮",
+        "کێ لە هەمووان زیاتر لە زستاندا سەرمای دەبێت؟ 🥶",
+        "کێ زیاتر لە هاویندا بۆڵەبۆڵ بەدەست گەرماوە دەکات؟ 🥵",
+        "کێ لە هەمووان زیاتر حەزی لە خواردنەوەی غازییە؟ 🥤",
+        "کێ ئەگەری هەیە تەنها بۆ تاقیکردنەوە خواردنێکی زۆر سەیر دروست بکات؟ 🍳",
+        "کێ لە هەمووان زیاتر حەزی لە قاوەی تاڵە؟ ☕",
+        "کێ کاتێک دەچێتە سوپەرمارکێت نیوەی پارەکەی بە چپس و شوکولاتە دەدات؟ 🍫",
+        "کێ لە هەمووان زیاتر بە ئاسانی پشپش دەبێت (قسەی پێ دەبرێت)؟ 🤫",
+        "کێ کاتێک بیر لە شتێک دەکاتەوە بە دەنگی بەرز قسە لەگەڵ خۆی دەکات؟ 🗣️",
+        "کێ لە هەمووان زیاتر حەزی لە سەیرکردنی یاری تۆپی پێیە؟ ⚽",
+        "کێ کاتێک کۆکەی دێت ناتوانێت کۆنتڕۆڵی خۆی بکات؟ 😷",
+        "کێ لە هەمووان پاکوخاوێنترە و هەمیشە دەستەکانی دەشوات؟ 🧼",
+        "کێ زیاتر لە نیو کاتژمێر لە حەمامدا دەمێنێتەوە؟ 🛀",
+        "کێ لە هەمووان زیاتر ڕقی لە خواردنی سەوزەیە؟ 🥦",
+        "کێ ئەگەری هەیە تەنها بۆ خۆشی کاتژمێر ٣ی شەو نان بخوات؟ 🍕",
+        "کێ لە هەمووان زیاتر حەزی لە گەشت و سەیرانە؟ 🌳",
+        "کێ زیاتر حەزی لە بڕینی نینۆکەکانیەتی؟ 💅",
+        "کێ لە هەمووان زیاتر تاقەتی بازاڕیکردنی نییە؟ 🛒",
+        "کێ هەمیشە شوێنی سویچی ئۆتۆمبێل یان مۆبایلەکەی ون دەکات؟ 🔑",
+        "کێ کاتێک تووڕە دەبێت بە خێرایی قسە دەکات و تێناگەیت چی دەڵێت؟ ⚡",
+        "کێ لە هەمووان زیاتر گوێ لە گۆرانی لۆکاڵی دەگرێت؟ 🪕",
+        "کێ کاتێک سەیری تەلەفزیۆن دەکات خەوی لێدەکەوێت؟ 📺",
+        "کێ لە هەمووان زیاتر حەزی لە بەستنی کڵاو و چاویلکەیە؟ 🕶️",
+        "کێ ئەگەری هەیە لە داهاتوودا ببێتە شێفێکی لێهاتوو؟ 👨‍🍳"
+    ],
+    cat_social: [
+        "کێ لە هەمووان زیاتر مۆبایلەکەی لە دەست دەکەوێت و دەشکێت؟ 📱",
+        "کێ لە هەمووان زیاتر بەبێ هۆکار لە ناو چاتدا تووڕە دەبێت؟ 😡",
+        "کێ لە هەمووان زیاتر بە دزییەوە سەیری مۆبایلی دەوروبەری دەکات؟ 👁️",
+        "کێ لە هەمووان زیاتر درەنگ وەڵامی نامە دەداتەوە؟ ⏳",
+        "کێ لە هەمووان زیاتر پۆستی سێریاس و فەلسەفی دەکات؟ 📝",
+        "کێ لە هەمووان زیاتر ستۆری پۆست دەکات؟ 📸",
+        "کێ بەردەوام سەیری پڕۆفایلی خەڵک دەکات بەبێ فۆڵۆو؟ 🕵️‍♂️",
+        "کێ ئەکاونتی ساختەی (Fake) زۆرترە؟ 👥",
+        "کێ ئەگەری زیاترە ڤیدیۆکانی تیکتۆک بە دەنگی بەرز لێبدات لە شوێنی گشتیدا؟ 🔊",
+        "کێ لە هەمووان زیاتر ئالوودەی یارییەکانی مۆبایلە (وەک پۆبجی)؟ 🎮",
+        "کێ کاتێک نامەی بۆ دەنێریت تەنها بە ئیمۆجی وەڵام دەداتەوە؟ 👍",
+        "کێ پاتری مۆبایلەکەی هەمیشە لە ژێر %١٠ دایە؟ 🪫",
+        "کێ لە هەمووان زیاتر لایڤی تۆڕە کۆمەڵایەتییەکان بەسەر دەکاتەوە؟ 🔴",
+        "کێ ئەگەری هەیە بەبێ هۆکار لە چاتێکدا «Seen» بکات و وەڵام نەداتەوە؟ 👀",
+        "کێ زۆرترین نامەی دەنگی (Voice) دەنێرێت کە درێژییەکەی لە ٣ خولەک زیاترە؟ 🎙️",
+        "کێ هەمیشە گوێگرێکی بێدەنگە لە گروپ چاتەکاندا؟ 🤐",
+        "کێ لە هەمووان خێراتر تایپ دەکات لە مۆبایلدا؟ ⚡",
+        "کێ زۆرترین گرینگی بە لایک و فۆڵۆوەر دەدات؟ 📈",
+        "کێ ئەگەری هەیە مۆبایلەکەی لە ئاودەس (توالێت) بکەوێت؟ 🚽",
+        "کێ لە هەمووان زیاتر مێمزی (Memes) پێکەنیناوی دەنێرێت؟ 🐸",
+        "کێ هەمیشە وێنەی خواردنەکانی پۆست دەکات پێش خواردنی؟ 📸",
+        "کێ کاتێک تەلەفۆنی بۆ دەکەیت هەمیشە هێڵەکەی مەشغوڵە؟ 📞",
+        "کێ لە هەمووان زیاتر بلۆکی (Block) خەڵک دەکات؟ 🚫",
+        "کێ ئەکاونتەکانی زووبەزوو دەکاتە پرایڤێت و پاشان پۆبڵیک؟ 🔒",
+        "کێ هەمیشە وایفای (Wi-Fi) خەڵکی تر بەکاردێنێت و هی خۆی پێ ناکات؟ 📶",
+        "کێ لە هەمووان زیاتر ئاڕکایڤی پۆستەکانی دەکات؟ 🗄️",
+        "کێ لە چاتدا وشەکان بە هەڵە دەنوسێت و سەت جار ڕاستی دەکاتەوە؟ ✏️",
+        "کێ ئەگەری هەیە پۆستێک بکات و دوای ٥ خولەک بە پەلە بیسڕێتەوە؟ 🏃‍♂️",
+        "کێ لە هەمووان زیاتر بەدوای نوێترین مۆدێلی مۆبایلدایە؟ 🍏",
+        "کێ هەمیشە لۆگۆ یان پاشبۆنی مۆبایلەکەی دەگۆڕێت؟ 🎨",
+        "کێ ئەگەری هەیە لە چاتدا لەبری نووسین تەنها ڤیدیۆی ئینستاگرام بنێرێت؟ ✉️",
+        "کێ لە هەمووان زیاتر ڕقی لە پەیوەندی تەلەفۆنییە و تەنها نامەی دەوێت؟ 💬",
+        "کێ هەمیشە مۆبایلەکەی لەسەر دۆخی بێدەنگ (Silent) داناوە؟ 🔕",
+        "کێ کاتێک لە دەرەوەیە چاٹس دەکات و دەدرێت بە عەرزدا؟ 🚷",
+        "کێ لە هەمووان زیاتر فۆڵۆوی لاپەڕە فەرمییەکان دەکات؟ 👑",
+        "کێ زۆرترین نامەی نەخوێندراوەی (Unread) هەیە لە واتسئەپ یان تێلێگرام؟ 📩",
+        "کێ هەمیشە مۆبایلەکەی بە شەحنەوەیە؟ 🔌",
+        "کێ ئەگەری هەیە لەبەر نامەیەک تەواوی شەو بەخەبەر بمێنێتەوە؟ 🌃",
+        "کێ لە هەمووان زیاتر ئاشنای نوێترین تڕێندەکانی تیکتۆک و ئینستایە؟ 📈",
+        "کێ هەمیشە پێشنیاری گۆڕینی ناوی گروپەکە دەکات؟ 🏷️",
+        "کێ لە دوای کاتژمێر ١٢ی شەو نامەی دڵتەنگی و خەمناک دەنێرێت؟ 🖤",
+        "کێ ئەگەری هەیە ئەکاونتەکەی هاک بکرێت لەبەر پاسوۆردی لاواز؟ 🔑"
+    ],
+    cat_crazy: [
+        "کێ ئەگەری زیاترە بچێتە چێشتخانەیەک و لە کۆتاییدا پارەی پێ نەبێت؟ 🍽️",
+        "کێ ئەگەری زیاترە لە تاقیکردنەوەدا فێڵ (قۆپیش) بکات و بگیرێت؟ 📝",
+        "کێ لە هەمووان زیاتر لێخوڕینی ئۆتۆمبێلی خراپە؟ 🚗",
+        "کێ لە هەمووان زیاتر حەزی لە قسەی نەستەق و کۆنە؟ 👴",
+        "کێ ئەگەری زیاترە گۆرانی بڵێت کاتێک لە حەمامە؟ 🎤",
+        "کێ ئەگەری زیاترە لە فیلمێکی ترسناکدا لە ترسا چاوی دابخات؟ 🍿",
+        "کێ ئەگەری زیاترە لە گەشتێکدا ڕێگا ون بکات؟ 🗺️",
+        "کێ پارە بە شتی بێ سوود دەدات و دوای پەشیمان دەبێتەوە؟ 💸",
+        "کێ ئەگەری هەیە بەبێ هۆکار سێ ڕۆژ تەلەفۆنەکەی بکوژێنێتەوە؟ 📴",
+        "کێ ئەگەری هەیە بە تەنها لە ژوورێکی تاریکدا سەیری فیلمی جنۆکە بکات؟ 👻",
+        "کێ ئەگەری هەیە لە ناو خەودا قسە بکات یان ڕێبکات؟ 🛌",
+        "کێ ئەگەری زۆرترە لە کاتی شەڕدا پۆلیس لێی بدات؟ 👮‍♂️",
+        "کێ ئەگەری هەیە لە شوێنێکی قەرەباڵغدا ناوی کەسێک بە هەڵە و بە دەنگی بەرز بڵێت؟ 📢",
+        "کێ ئەگەری هەیە بڕوای بە بوونی بوونەوەرە فەزاییەکان (Aliens) هەبێت؟ 👽",
+        "کێ ئەگەری هەیە بەبێ چاویلکەی مەلەکردن لە ناو حەوزدا چاوی بکاتەوە؟ 🏊‍♂️",
+        "کێ ئەگەری هەیە لە کۆنسێرتێکدا خۆی فڕێ بداتە ناو جەماوەرەوە؟ 🎸",
+        "کێ ئەگەری هەیە پیاز بە ساغی وەک سێو بخوات؟ 🧅",
+        "کێ ئەگەری هەیە خۆی بکات بە کڕیاری خانوو تەنها بۆ ئەوەی سەیری ناو ماڵەکان بکات؟ 🏠",
+        "کێ ئەگەری هەیە لە پڕێکدا بڕیار بدات قژی کورت بکاتەوە و پاشان بگریت؟ ✂️",
+        "کێ ئەگەری هەیە بەشداری بکات لە یاری بازدان بە پەsubstitution (Bungee Jumping)؟ 🪂",
+        "کێ ئەگەری هەیە لە چاوپێکەوتنی کاردا مەشروب یان بنێشت بەجێ بهێڵێت؟ 💼",
+        "کێ ئەگەری هەیە ببێتە سەرکردەی باندێکی مافیا لە داهاتوودا؟ 🕶️",
+        "کێ ئەگەری هەیە مار یان دووپشک وەک ئاژەڵی ماڵی ڕابگرێت؟ 🐍",
+        "کێ ئەگەری هەیە لەسەر تاقیکردنەوەیەک لەگەڵ مامۆستادا شەڕ بکات؟ 🏫",
+        "کێ ئەگەری هەیە بەبێ جانتا و پارە گەشت بۆ دەرەوەی وڵات بکات؟ ✈️",
+        "کێ ئەگەری هەیە لە تەمەنی ٥٠ ساڵیدا بڕیار بدات ببێتە یاریزانی گەیتار؟ 🎸",
+        "کێ ئەگەری هەیە پاشەکەوتی ١٠ ساڵی تەنها لە یەک ڕۆژدا خەرج بکات؟ 💰",
+        "کێ ئەگەری هەیە لە کاتی پێکەنیندا ئاو لە دەمی بپڕژێتە دەرەوە؟ 💦",
+        "کێ ئەگەری هەیە لە نیوەی شەودا بچێتە سەر سەربان بۆ سەیرکردنی ئەستێرەکان؟ 🌌",
+        "کێ ئەگەری هەیە بڕوای بە جادوو و فاڵگرتن هەبێت؟ 🔮",
+        "کێ ئەگەری هەیە بۆ ماوەی یەک هەفتە خۆی نەشوات و گوێی پێ نەدات؟ 🧼",
+        "کێ ئەگەری هەیە ناوی منداڵەکەی بنێت بە ناوی پاڵەوانێکی ئەنیمێ؟ ⛩️",
+        "کێ ئەگەری هەیە بچێتە ناو کێبڕکێی خواردنی خێرا (وەک پیتزا خواردن)؟ 🍕",
+        "کێ ئەگەری هەیە ببێتە یوتیوبەرێکی سەرکێش (Prankster) کە خەڵک بێزار دەکات؟ 🎥",
+        "کێ ئەگەری هەیە لە زستاندا بە ئاوی سەارد خۆی بشوات؟ 🚿",
+        "کێ ئەگەری هەیە لە کاتی دانیشتن لە شوێنێکی فەرمی کاتژمێری مۆبایلەکەی زەنگ لێ بدات؟ ⏰",
+        "کێ ئەگەری هەیە بەبێ هۆکار لە کەسێکی سەر جادە تووڕە ببێت؟ 🚸",
+        "کێ ئەگەری هەیە لە ناو ئۆتۆمبێلدا بە دەنگی زۆر بەرز هاوار بکات و گۆرانی بڵێت؟ 🎶",
+        "کێ ئەگەری هەیە بڕیار بدات بچێتە دارستان و بە تەنها بژی؟ 🪵",
+        "کێ ئەگەری هەیە تاتۆیەکی زۆر سەیر لەسەر دەستی بکات؟ ✒️",
+        "کێ ئەگەری هەیە لەبەر خۆشەویستی پۆستێکی زۆر عاتیفی بکات و گشت هاوڕێکانی پێی پێبکەنن؟ 💔",
+        "کێ ئەگەری هەیە لە کاتی تاقیکردنەوەی شۆفێریدا کێشە بە پۆلیسی هاتوچۆ بدات؟ 👮‍♂️"
+    ]
+};
+
+        function goToCategories() {
+            showSection('section-categories');
+        }
+
+        function toggleCat(id) {
+            const btn = document.getElementById(id);
+            if (selectedCats.includes(id)) {
+                selectedCats = selectedCats.filter(c => c !== id);
+                btn.classList.remove('selected');
+            } else {
+                selectedCats.push(id);
+                btn.classList.add('selected');
+            }
         }
 
         function startGame() {
+            if (selectedCats.length === 0) {
+                alert("⚠️ تکایە لانی کەم یەک پۆل هەڵبژێڕە پێش دەستپێکردن!");
+                return;
+            }
             usedQuestions = [];
             showSection('section-game');
             nextQuestion();
         }
 
         function nextQuestion() {
+            // سڕینەوە و شاردنەوەی ژمارەی پێچەوانەی کۆن
+            if (countdownInterval) clearInterval(countdownInterval);
             document.getElementById('countdown-box').classList.add('hidden');
 
-            if (usedQuestions.length === questions.length) {
-                alert("هەموو پرسیارەکان تەواو بوون! دووبارە لە سەرەتاوە دەستپێدەکەینەوە.");
+            // کۆکردنەوەی هەموو پرسیارەکانی نێو پۆلە هەڵبژێردراوەکان
+            let pool = [];
+            selectedCats.forEach(cat => {
+                pool = pool.concat(questionsData[cat]);
+            });
+
+            // پاڵاوتنی ئەو پرسیارانەی کە هێشتا لێ نەدراون
+            let availableQuestions = pool.filter(q => !usedQuestions.includes(q));
+
+            if (availableQuestions.length === 0) {
+                alert("🎉 هەموو پرسیارەکانی ئەم بەشە تەواو بوون! دووبارە ڕێست دەبنەوە.");
                 usedQuestions = [];
+                availableQuestions = pool;
             }
 
-            let availableQuestions = questions.filter(q => !usedQuestions.includes(q));
             let randomQ = availableQuestions[Math.floor(Math.random() * availableQuestions.length)];
-            
             usedQuestions.push(randomQ);
+
+            // دیاریکردنی جۆری باجەکە بەپێی پرسیارەکە
+            let badgeText = "🤔 کاممان زیاتر؟";
+            for (let cat in questionsData) {
+                if (questionsData[cat].includes(randomQ)) {
+                    if (cat === 'cat_normal') badgeText = "😊 گشتی";
+                    if (cat === 'cat_social') badgeText = "📱 کۆمەڵایەتی";
+                    if (cat === 'cat_crazy') badgeText = "🤪 شێتانە";
+                }
+            }
+
+            document.getElementById('question-badge').innerText = badgeText;
             document.getElementById('question-text').innerText = randomQ;
         }
 
@@ -153,20 +327,29 @@
             const countdownBox = document.getElementById('countdown-box');
             const countdownNum = document.getElementById('countdown-number');
             
+            // ئەگەر پێشتر ژمارەی پێچەوانە دەستی پێکردبێت، لای دەبەین بۆ ئەوەی خێرا نەبێت
+            if (countdownInterval) clearInterval(countdownInterval);
+            
             countdownBox.classList.remove('hidden');
             let count = 3;
             countdownNum.innerText = count;
 
-            let interval = setInterval(() => {
+            countdownInterval = setInterval(() => {
                 count--;
                 if (count > 0) {
                     countdownNum.innerText = count;
                 } else if (count === 0) {
                     countdownNum.innerText = "ئاماژە بکە! 👉";
                 } else {
-                    clearInterval(interval);
+                    clearInterval(countdownInterval);
                 }
             }, 1000);
+        }
+
+        function showSection(id) {
+            document.querySelectorAll('main > div').forEach(s => s.classList.add('hidden-section'));
+            document.getElementById(id).classList.remove('hidden-section');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
     </script>
 </body>

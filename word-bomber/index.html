@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>بۆمبەری ووشەکان | زەنگ</title>
+    <title>بۆمب | زەنگ</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;700;900&display=swap');
@@ -38,7 +38,7 @@
 
         .btn-cyber {
             border-bottom: 4px solid rgba(0,0,0,0.2);
-            transition: all 0.15s ease-in-out;
+            transition: transform 0.1s ease-in-out, border-width 0.1s ease-in-out;
         }
         .btn-cyber:active {
             transform: translateY(3px);
@@ -56,8 +56,8 @@
 
         /* 🎰 ئەنیمەیشنی تێکەڵبوونی بابەتەکان */
         @keyframes spinBlur {
-            0% { transform: translateY(-20px); opacity: 0.3; filter: blur(2px); }
-            100% { transform: translateY(0px); opacity: 1; filter: blur(0px); }
+            0% { transform: translateY(-5px); filter: blur(1px); }
+            100% { transform: translateY(5px); filter: blur(0px); }
         }
         .spin-anim { animation: spinBlur 0.05s infinite alternate; }
     </style>
@@ -69,28 +69,26 @@
     <header class="w-full max-w-4xl mx-auto mb-8 px-4 py-3 bg-white/50 backdrop-blur-md rounded-2xl border border-white/60 shadow-sm flex justify-between items-center">
         <div class="flex items-center gap-3">
             <div class="w-3 h-3 rounded-full bg-purple-500 shadow-[0_0_10px_#a855f7] animate-pulse"></div>
-            <h1 class="text-xl md:text-2xl font-[900] text-gray-800">بۆمبەری ووشەکان</h1>
+            <h1 class="text-xl md:text-2xl font-[900] text-gray-800">بۆمب</h1>
         </div>
-        <div class="flex items-center gap-4">
-            <nav class="flex gap-6 font-black text-sm md:text-lg text-gray-700">
-                <a href="../index.html" class="hover:text-purple-600 border-b-2 border-transparent hover:border-purple-600 pb-0.5 transition">➔ گەڕانەوە</a>
-            </nav>
-        </div>
+        <nav class="flex gap-6 font-black text-sm md:text-base text-gray-700">
+            <a href="../index.html" class="hover:text-purple-600 transition">➔ گەڕانەوە</a>
+        </nav>
     </header>
 
     <main class="w-full max-w-md mx-auto">
 
         <div id="section-setup" class="game-card-neon p-6 md:p-8 rounded-2xl text-center">
             <div class="text-6xl mb-4">💣</div>
-            <h2 class="text-2xl font-[900] mb-4 text-purple-600">کاتی بۆمبەکە دیاری بکە.</h2>
+            <h2 class="text-2xl font-[900] mb-4 text-purple-600">کاتی بۆمبەکە دیاری بکە</h2>
             <p class="text-gray-500 font-bold mb-6 text-sm leading-relaxed">مۆبایلەکە دابنێ لە ناوەڕاست، یارییەکە خۆی ئاڕاستەی سووڕانەوەکە بۆ مەجلیسەکە دیاری دەکات. ووشە بڵێن بە خێرایی پێش تەقینەوە!</p>
             
             <div class="mb-8 bg-white/60 p-4 rounded-xl border border-gray-200">
                 <label class="block text-gray-700 font-black mb-3">کاتی یاری (بە چرکە):</label>
                 <div class="flex items-center justify-center gap-4">
-                    <button onclick="changeTime(-5)" class="w-12 h-12 bg-red-100 text-red-600 rounded-xl text-2xl font-black btn-cyber">5+</button>
+                    <button onclick="changeTime(-5)" class="w-12 h-12 bg-rose-100 text-rose-600 rounded-xl text-2xl font-black btn-cyber">-5</button>
                     <span id="custom-time-display" class="text-4xl font-[900] text-gray-800 min-w-[80px]">30</span>
-                    <button onclick="changeTime(5)" class="w-12 h-12 bg-green-100 text-green-600 rounded-xl text-2xl font-black btn-cyber">5+</button>
+                    <button onclick="changeTime(5)" class="w-12 h-12 bg-green-100 text-green-600 rounded-xl text-2xl font-black btn-cyber">+5</button>
                 </div>
             </div>
 
@@ -120,7 +118,7 @@
 
         <div id="section-explosion" class="hidden-section text-center">
             <div class="game-card-neon p-8 rounded-2xl mb-6 bg-red-600 border-2 border-red-700 text-white shadow-2xl shadow-red-500/50">
-                <div class="text-9xl animate-ping my-6">💥</div>
+                <div class="text-9xl animate-bounce my-6">💥</div>
                 <h2 class="text-4xl font-[900] mb-2 text-yellow-300">بووووم!!!</h2>
                 <p class="text-xl font-black mb-6">بۆمبەکە تەقییەوە! کێ نۆبەی بوو دۆڕا 😵</p>
                 
@@ -136,59 +134,44 @@
 
     <script>
         let topics = [
-            // 🌟 بابەتە کلاسیکی و گشتییەکان
             "دارستان 🌲", "چێشتخانە 🍳", "قوتابخانە 📝", "وڵاتان 🌍", "ناوەکانی کچان 👩", 
             "ناوەکانی کوڕان 👦", "ئامێری کارەبایی 🔌", "خواردنەکان 🍔", "ئۆتۆمبێلەکان 🚗", 
             "میوەکان 🍎", "وەرزشەکان ⚽", "فیلم و زنجیرەکان 🎬", "مۆبایل و تەکنەلۆجیا 📱", 
             "ئاژەڵان 🦁", "جلووبەرگ 👕", "پیشەکان 👨‍🔧", "شارەکانی کوردستان 🏙️",
             "کەلوپەلی ناو جانتا 🎒", "ئەپڵیکەیشنەکانی مۆبایل 🌐", "شتێک لە ئاسماندا هەبێت ☁️",
             "کەلوپەلی حەمام 🛁", "براندەکانی جیهان 🏷️", "شتێک ڕەنگی سوور بێت 🔴", "سەوزەوات 🥦",
-
-            // 🍗 خواردن و مەتبەخی کوردی و خۆش
             "خواردنی کوردی 🍲", "جۆرەکانی شیکەرەوە و شیرینی 🍰", "شتێک لە ناو سەلاجەدا هەیە 🧊", 
             "کەلوپەلی چێشت لێنان 🥣", "شتێک تامی تاڵ بێت ☕", "شتێک زۆر توون و تیژ بێت 🌶️", 
             "جۆرەکانی پسکیت و جپس 🍪", "شتێک بۆ بەیانیان دەخورێت 🍳", "ساردەمەنی و شەربەتەکان 🍹",
             "شتێک لە دەورەی ساردەمەنی دەست دەکەوێت 🍦", "جۆرەکانی ترشیات و مەزە 🥒",
-
-            // 🏠 شتەکانی ناو ماڵ و حەوشە
             "شتێک لە ناو دەولابی جلوبەرگدا هەیە 👔", "شتێک لە ژووری میواندا هەیە 🛋️", 
             "کەلوپەلی پاککەرەوە (مەواد) 🧼", "شتێک لە حەوشە یان باڵکۆندا هەیە 🪴", 
-            "ئامێری ناو مەتبەخ  blender", "شتێک لەسەر مێزی خێزان هەیە 🍽️", 
+            "ئامێری ناو مەتبەخ 🥣", "شتێک لەسەر مێزی خێزان هەیە 🍽️", 
             "شتێک منداڵ پێی یاری دەکات 🧸", "شتێک لە دەرمانخانەی ماڵەوەدا هەیە 💊",
-
-            // 🚘 ناو بازاڕ، سەر شەقام و سەیارە
             "ئامێری ناو سەیارە 📻", "شتێک لە ناو بەنزینخانەدا هەیە ⛽", 
             "دووکانەکانی ناو بازاڕ 🛒", "شتێک لە ناو تەکسی یان پاسدا دەبینرێت 🚕", 
             "براندەکانی مۆبایل و کۆمپیوتەر 💻", "یارییەکانی ناو پلەیستەیشن و کۆمپیوتەر 🎮", 
-            "شتێک لە ناو چێشتخانە (ڕێستۆرانت) دا هەیە 🍟", "شوێنی گەشتیاری لە کوردستان ⛰️",
-
-            // 🧠 سیفات، مەجلیس و شتی کۆمیدی (یەکجار خۆش بۆ یاری)
+            "شتێک لە ناو چێشتخانەدا هەیە 🍟", "شوێنی گەشتیاری لە کوردستان ⛰️",
             "سیفاتێکی خراپی مرۆڤ 👿", "سیفاتێکی باشی مرۆڤ 😇", "شتێک مرۆڤ لێی دەترسێت 👻", 
             "شتێک پارەی زۆری دەوێت 💰", "شتێک کێشی زۆر قورس بێت 🏋️‍♂️", "جۆرەکانی ڕەنگ 🎨", 
-            "شتێک بۆنی زۆر خۆش بێت 🌸", "شتێک بۆنی ناخۆش بێت 🧦", "شتێک لە ئاودەست (توالێت) دا هەیە 🧻",
+            "شتێک بۆنی زۆر خۆش بێت 🌸", "شتێک بۆنی ناخۆش بێت 🧦", "شتێک لە توالێتدا هەیە 🧻",
             "جێگەیەک کە خەڵک تێیدا حەز بە بێدەنگی دەکات 🤫", "شتێک لە ناو دەست و باخەڵی پیاواندا هەیە 🔑",
-
-            // 🛠️ پیشە، ئامراز و خوێندن
             "کەلوپەلی وەستایەتی و بیناسازی 🔨", "ماددەکانی قوتابخانە 📐", 
             "پیشەیەک کە لە دەرەوە بێت 👷‍♂️", "شتێک لە زانکۆدا دەبینرێت 🎓", 
             "کەلوپەلی ناو پۆلی خوێندن 🪟", "ئامرازی نووسین و وێنەکێشان ✏️",
-
-            // 🌍 سروشت و زانست و جیهان
             "باڵندەکان 🦅", "حەشەرات و مێرووەکان 🐜", "گیانەوەرە دەریاییەکان 🦈", 
-            "جۆرەکانی دار و گوڵ 🌹", "دیاردە سروشتییەکان (وەک باران و با) ⛈️", 
-            "زمانەکانی جیهان 🗣️", "ناسا و گەردوون (هەسارەکان) 🚀", "شتێک کە مرۆڤ دەتوانێت مەلەوانی تێدا بکات 🏊‍♂️",
-
-            // 🎭 شتی تر و جۆراوجۆر
-            "ئامێرە مۆسیقییەکان 🎸", "جۆرەکانی وەرزش بەبێ تۆپ 🏃‍♂️", "کارەکتەری کارتۆنی کۆن یان نوێ 🦸‍♂️", 
+            "جۆرەکانی دار و گوڵ 🌹", "دیاردە سروشتییەکان ⛈️", 
+            "زمانەکانی جیهان 🗣️", "ناسا و گەردوون 🚀", "شوێنێک بۆ مەلەکردن 🏊‍♂️",
+            "ئامێرە مۆسیقییەکان 🎸", "جۆرەکانی وەرزش بەبێ تۆپ running🏃‍♂️", "کارەکتەری کارتۆنی 🦸‍♂️", 
             "شتێک کە تەنها لە زستاندا بەکاردێت 🧥", "شتێک کە تەنها لە هاویندا بەکاردێت 🩳", 
-            "میدیای کۆمەڵایەتی (سۆشیاڵ میدیا) 📱", "شتێک بە دوگمە کار دەکات 🔘", "شتێک لە شوشە دروستکرابێت 🧪",
-            "شتێک کە دەتوانیت بیپۆشیت (جگە لە جل) ⌚", "شتێک کە لە ناو جزدانی پارەدا هەیە 💳",
+            "میدیای کۆمەڵایەتی 📱", "شتێک بە دوگمە کار دەکات 🔘", "شتێک لە شوشە دروستکرابێت 🧪",
+            "شتێک کە دەتوانیت بیپۆشیت ⌚", "شتێک کە لە ناو جزدانی پارەدا هەیە 💳",
             "شتێک کە کچی پێ جوان دەبێت 💄", "شتێک کە پێویستی بە پاتری هەیە 🔋",
             "شتێک کە لە کاتی خەودا بەکاردێت 🛌", "شتێک کە لە ناو قاوەخانەدا هەیە ☕",
-            "وەرزشوان یان یاریزانە بەناوبانگەکان 🏆", "گۆرانیبێژەکان (کوردی یان جیهانی) 🎤",
+            "وەرزشوانە بەناوبانگەکان 🏆", "گۆرانیبێژەکان 🎤",
             "شتێک مرۆڤ پێی دڵخۆش دەبێت 🎉", "شتێک مرۆڤ پێی بێزار دەبێت 😮‍💨",
-            "شتێک پزیشک (دکتۆر) بەکاری دەهێنێت 🩺", "جۆرەکانی چەک یان کەرەستەی شەڕ ⚔️",
-            "شتێک کە دەفڕێت ✈️", "شتێک کە کلکی هەبێت 🐕", "شتێک کە زۆر تیژ بێت (ببڕێت) 🔪",
+            "شتێک دکتۆر بەکاری دەهێنێت 🩺", "جۆرەکانی چەک یان کەرەستەی شەڕ ⚔️",
+            "شتێک کە دەفڕێت ✈️", "شتێک کە کلکی هەبێت 🐕", "شتێک کە زۆر تیژ بێت 🔪",
             "شتێک ڕەنگی زەرد بێت 💛", "شتێک ڕەنگی شین بێت 💙", "شتێک ڕەنگی ڕەش بێت 🖤"
         ];
 
@@ -197,10 +180,20 @@
         let timer = null;
         let spinInterval = null;
         let countdownTimer = null;
-        
-        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        let audioCtx = null;
+
+        // دڵنیابوونەوە لە دەستپێکردنی دەنگ بە فەرمی لە دوای کلیک کردن
+        function initAudio() {
+            if (!audioCtx) {
+                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            }
+            if (audioCtx.state === 'suspended') {
+                audioCtx.resume();
+            }
+        }
 
         function playSound(freq, type, duration, volume = 0.1) {
+            initAudio();
             try {
                 let osc = audioCtx.createOscillator();
                 let gain = audioCtx.createGain();
@@ -212,6 +205,7 @@
         }
 
         function playHugeExplosion() {
+            initAudio();
             try {
                 for (let i = 0; i < 3; i++) {
                     let osc = audioCtx.createOscillator(); let gain = audioCtx.createGain();
@@ -241,6 +235,7 @@
         }
 
         function startSpinning() {
+            initAudio();
             timeLeft = chosenDuration;
             showSection('section-game');
             
@@ -259,27 +254,25 @@
                 document.getElementById('topic-text').innerText = randomTopic;
                 playSound(300 + (counter * 10), "sine", 0.03, 0.05);
 
-                if (counter > 30) {
+                if (counter > 25) {
                     clearInterval(spinInterval);
-                    speed += 60;
-                    if (speed < 400) {
+                    speed += 65;
+                    if (speed < 350) {
                         spinInterval = setInterval(spin, speed);
                     } else {
-                        // کاتێک لەسەر بابەتەکە وەستا، دەست دەکات بە وەستانی ٣ چرکەییەکە
-                        setTimeout(startThreeSecondCountdown, 500);
+                        setTimeout(startFiveSecondCountdown, 400);
                     }
                 }
             }
+            if (spinInterval) clearInterval(spinInterval);
             spinInterval = setInterval(spin, speed);
         }
 
-        // ⏱️ لێرەدا ٣ چرکە دەوەستێت پێش ئەوەی کاتەکە بڕوات
-        function startThreeSecondCountdown() {
+        function startFiveSecondCountdown() {
             document.getElementById('topic-text').classList.remove('spin-anim');
             document.getElementById('status-badge').innerText = "⏳ ئامادەباشی...";
             document.getElementById('bomb-emoji').innerText = "👀";
             
-            // دیاریکردنی ئاڕاستەی میلی کاتژمێر
             let directions = [
                 "🔄 بە ئاڕاستەی میلی کاتژمێر بخولێنەوە",
                 "↩️ بە پێچەوانەی میلی کاتژمێر بخولێنەوە"
@@ -289,10 +282,11 @@
             dirBox.innerText = randomDir;
             dirBox.classList.remove('opacity-0');
 
-            let count = 3;
+            let count = 5;
             document.getElementById('timer-display').innerText = `⚠️ ${count}`;
             playSound(500, "triangle", 0.2, 0.15);
 
+            if (countdownTimer) clearInterval(countdownTimer);
             countdownTimer = setInterval(() => {
                 count--;
                 if (count > 0) {
@@ -300,7 +294,7 @@
                     playSound(500, "triangle", 0.2, 0.15);
                 } else {
                     clearInterval(countdownTimer);
-                    actualStartGame(); // دوای ٣ چرکە، یارییەکە دەستپێدەکات
+                    actualStartGame();
                 }
             }, 1000);
         }
@@ -311,7 +305,7 @@
             document.getElementById('bomb-emoji').className = "text-7xl mb-4 bomb-active";
             
             updateTimerDisplay();
-            playSound(850, "triangle", 0.5, 0.25); // دەنگی فیکەی دەستپێکردن
+            playSound(850, "triangle", 0.5, 0.25);
 
             if (timer) clearInterval(timer);
             timer = setInterval(countDown, 1000);
@@ -350,6 +344,7 @@
             if (timer) clearInterval(timer);
             if (spinInterval) clearInterval(spinInterval);
             if (countdownTimer) clearInterval(countdownTimer);
+            document.getElementById('bomb-emoji').className = "text-7xl mb-4";
             showSection('section-setup');
         }
     </script>

@@ -2,7 +2,7 @@
 <html lang="ku" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>زەنگ | ZANG</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
@@ -12,8 +12,9 @@
             font-family: 'Vazirmatn', sans-serif;
             background: linear-gradient(135deg, #f3f4f6 0%, #eef2ff 50%, #fae8ff 100%);
             min-height: 100vh;
-            overflow-x: hidden;
+            overflow-x: hidden; /* ڕێگری لە جوڵەی ڕاست و چەپ */
             position: relative;
+            width: 100%;
         }
 
         .neon-bg-1 {
@@ -105,7 +106,7 @@
         <a href="imposter/index.html" class="game-card-neon p-6 md:p-8 block rounded-2xl animate-f1 card-imposter group">
             <div class="flex justify-between items-start mb-4 md:mb-6">
                 <div class="text-6xl md:text-7xl filter drop-shadow-md group-hover:rotate-6 transition-transform">🃏</div>
-                <div class="bg-red-500 text-white px-4 py-1.5 rounded-full font-black text-xs md:text-sm">ئێستا بکەرەوە</div>
+                <div class="bg-red-500 text-white px-4 py-1.5 rounded-full font-black text-xs md:text-sm">پڕ یاریزان ترین </div>
             </div>
             <h2 class="text-2xl md:text-4xl font-[900] text-gray-800 mb-2 md:mb-3 group-hover:text-red-600 transition-colors">کێ فریودەرە؟</h2>
             <p class="text-base md:text-xl font-bold text-gray-500/90 leading-relaxed">هاوڕێکانت کۆبکەرەوە و بزانە کێ لە گروپەکەدا فێڵ دەکات و وشەکە نازانێت!</p>
@@ -117,7 +118,7 @@
         <a href="truth-or-dare/index.html" class="game-card-neon p-6 md:p-8 block rounded-2xl animate-f2 card-truth group">
             <div class="flex justify-between items-start mb-4 md:mb-6">
                 <div class="text-6xl md:text-7xl filter drop-shadow-md group-hover:rotate-6 transition-transform">🤫</div>
-                <div class="bg-blue-500 text-white px-4 py-1.5 rounded-full font-black text-xs md:text-sm">تەواو بوو</div>
+                <div class="bg-blue-500 text-white px-4 py-1.5 rounded-full font-black text-xs md:text-sm">ئەوە تێ کەتی😂</div>
             </div>
             <h2 class="text-2xl md:text-4xl font-[900] text-gray-800 mb-2 md:mb-3 group-hover:text-blue-600 transition-colors">راستی یان بوێری</h2>
             <p class="text-base md:text-xl font-bold text-gray-500/90 leading-relaxed">ئامادەی بۆ ئاشکراکردنی نهێنییەکان یان کردنی کارە بوێرەکان؟ بزانیم کێ زاتی زیاترە!</p>
@@ -129,10 +130,10 @@
         <a href="most-likely/index.html" class="game-card-neon p-6 md:p-8 block rounded-2xl animate-f3 card-likely group">
             <div class="flex justify-between items-start mb-4 md:mb-6">
                 <div class="text-6xl md:text-7xl filter drop-shadow-md group-hover:rotate-6 transition-transform">🤷🏻‍♂️</div>
-                <div class="bg-green-500 text-white px-4 py-1.5 rounded-full font-black text-xs md:text-sm">تەواو بوو</div>
+                <div class="bg-green-500 text-white px-4 py-1.5 rounded-full font-black text-xs md:text-sm"> تەواو بووە</div>
             </div>
             <h2 class="text-2xl md:text-4xl font-[900] text-gray-800 mb-2 md:mb-3 group-hover:text-green-600 transition-colors">کاممان زیاتر؟</h2>
-            <p class="text-base md:text-xl font-bold text-gray-500/90 leading-relaxed">کێ لەم گروپە لە هەمووان ئەم سیفاتەی تێدا پێشنیار دەکرێت؟</p>
+            <p class="text-base md:text-xl font-bold text-gray-500/90 leading-relaxed">کێ لەم گروپە لە هەمووان ئەم سیفاتەی تێدا پێشنیار دەکرێت?</p>
             <div class="mt-6 md:mt-8">
                 <div class="btn-cyber bg-gradient-to-r from-green-500 to-emerald-500 text-white inline-block px-6 py-2.5 md:px-8 md:py-3.5 rounded-xl font-black text-lg md:text-xl">دەستپێکردن ➔</div>
             </div>
@@ -143,7 +144,7 @@
                 <div class="text-6xl md:text-7xl filter drop-shadow-md group-hover:scale-110 transition-transform">💣</div>
                 <div class="bg-purple-500 text-white px-4 py-1.5 rounded-full font-black text-xs md:text-sm">مەجلیسی 🔥</div>
             </div>
-            <h2 class="text-2xl md:text-4xl font-[900] text-gray-800 mb-2 md:mb-3 group-hover:text-purple-600 transition-colors">بۆمبەری ووشەکان</h2>
+            <h2 class="text-2xl md:text-4xl font-[900] text-gray-800 mb-2 md:mb-3 group-hover:text-purple-600 transition-colors">بۆمب</h2>
             <p class="text-base md:text-xl font-bold text-gray-500/90 leading-relaxed">مۆبایلەکە بنێ ناوەڕاست، بابەتەکە دەخولێتەوە و خۆی ئاڕاستەی قسەکردن دیاری دەکات، خێرا ووشە بڵێ پێش تەقینەوە!</p>
             <div class="mt-6 md:mt-8">
                 <div class="btn-cyber bg-gradient-to-r from-purple-500 to-indigo-500 text-white inline-block px-6 py-2.5 md:px-8 md:py-3.5 rounded-xl font-black text-lg md:text-xl">دەستپێکردن ➔</div>

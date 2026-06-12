@@ -2,7 +2,7 @@
 <html lang="ku" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>کێ فریودەرە؟ | زەنگ</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
@@ -12,10 +12,12 @@
             font-family: 'Vazirmatn', sans-serif; 
             background: linear-gradient(135deg, #f3f4f6 0%, #eef2ff 50%, #fae8ff 100%);
             min-height: 100vh; 
-            overflow-x: hidden;
+            overflow-x: hidden; /* ڕێگری تەواو لە جوڵان بۆ ڕاست و چەپ */
             position: relative;
+            width: 100%;
         }
 
+        /* 🔮 ڕووناکی پشتەوە */
         .neon-bg-1 {
             position: absolute;
             width: 450px;
@@ -24,7 +26,6 @@
             top: -5%;
             left: -10%;
             z-index: -1;
-            animation: pulseGlow 6s infinite alternate;
         }
         .neon-bg-2 {
             position: absolute;
@@ -34,14 +35,9 @@
             bottom: 5%;
             right: -10%;
             z-index: -1;
-            animation: pulseGlow 9s infinite alternate-reverse;
         }
 
-        @keyframes pulseGlow {
-            0% { transform: scale(1); opacity: 0.7; }
-            100% { transform: scale(1.12); opacity: 1; }
-        }
-
+        /* 🎛️ دیزاینی کارتە شووشەییەکان */
         .glass-box { 
             background: rgba(255, 255, 255, 0.75); 
             backdrop-filter: blur(12px); 
@@ -51,22 +47,19 @@
             border-radius: 1.5rem;
         }
 
+        /* 🔘 ستایلی دوگمەکان */
         .btn-cyber { 
             border-bottom: 3px solid rgba(0,0,0,0.15); 
-            transition: all 0.2s ease-in-out; 
-        }
-        .btn-cyber:hover { 
-            transform: translateY(-2px); 
-            box-shadow: 0 5px 15px rgba(0,0,0,0.08); 
+            transition: transform 0.1s ease-in-out, border-width 0.1s ease-in-out; 
         }
         .btn-cyber:active { 
-            transform: translateY(1px); 
+            transform: translateY(2px); 
             border-bottom-width: 1px; 
         }
 
-        .card-inner { transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275); transform-style: preserve-3d; }
+        .card-inner { transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.1); transform-style: preserve-3d; }
         .card-inner.flipped { transform: rotateY(180deg); }
-        .hidden-section { display: none; }
+        .hidden-section { display: none !important; }
     </style>
 </head>
 <body class="p-4 md:p-6 flex flex-col items-center">
@@ -76,11 +69,11 @@
 
     <header class="w-full max-w-4xl mx-auto mb-8 px-4 py-3 bg-white/50 backdrop-blur-md rounded-2xl border border-white/60 shadow-sm flex justify-between items-center">
         <div class="flex items-center gap-3">
-            <div class="w-3 h-3 rounded-full bg-red-500 shadow-[0_0_10px_#3b82f6] animate-pulse"></div>
+            <div class="w-3 h-3 rounded-full bg-purple-500 shadow-[0_0_10px_#a855f7] animate-pulse"></div>
             <h1 class="text-xl md:text-2xl font-[900] text-gray-800">کێ فریودەرە؟</h1>
         </div>
         <nav class="flex gap-4 font-black text-sm md:text-base text-gray-700">
-            <a href="../index.html" class="hover:text-blue-600 transition">➔ گەڕانەوە</a>
+            <a href="../index.html" class="hover:text-purple-600 transition">➔ گەڕانەوە</a>
         </nav>
     </header>
 
@@ -107,7 +100,6 @@
             <select id="imposter-count" class="w-full p-3 border-2 border-purple-100 rounded-xl font-bold outline-none bg-white/80">
                 <option value="1">١ فریودەر</option>
                 <option value="2">٢ فریودەر</option>
-                <option value="3">٣ فریودەر</option>
             </select>
         </div>
         
@@ -123,7 +115,7 @@
             <div id="main-card" class="card-inner w-full h-full relative cursor-pointer" onclick="flipCard()">
                 
                 <div class="absolute w-full h-full bg-gradient-to-br from-purple-600 to-indigo-700 rounded-2xl flex flex-col items-center justify-center shadow-xl border border-white/20" style="backface-visibility: hidden;">
-                    <div class="text-7xl mb-4 drop-shadow-md animate-bounce">❓</div>
+                    <div class="text-7xl mb-4 drop-shadow-md">❓</div>
                     <p class="font-black text-xl text-white/90 tracking-wide">بۆ بینینی ناوەکە کلیک بکە</p>
                 </div>
                 
@@ -146,7 +138,7 @@
 
     <div id="section-timer" class="hidden-section text-center max-w-md w-full px-4">
         <div class="glass-box p-6 md:p-8 border-t-4 border-t-indigo-500">
-            <h2 class="text-2xl font-[900] mb-4 text-indigo-950">کاتی گفتوگۆ و گۆمان</h2>
+            <h2 class="text-2xl font-[900] mb-4 text-indigo-950">کاتی گفتوگۆ و گومان</h2>
             
             <div class="bg-white/60 border border-purple-100 p-4 rounded-xl mb-6 shadow-sm">
                 <p class="font-bold text-gray-500 text-sm mb-1">کەسی یەکەم کە دەست بە قسە دەکات:</p>
@@ -166,38 +158,89 @@
                 <h3 id="imposter-name" class="text-2xl font-black text-rose-600 leading-relaxed">ناو</h3>
             </div>
 
-            <div id="penalty-box" class="hidden bg-amber-50 border border-amber-200 p-4 rounded-xl mb-6 shadow-inner animate-pulse">
+            <div id="penalty-box" class="hidden bg-amber-50 border border-amber-200 p-4 rounded-xl mb-6 shadow-inner">
                 <p class="text-xs font-black text-amber-500 uppercase tracking-wider mb-1">🎯 سزای فریودەری دۆڕاو</p>
                 <h4 id="penalty-text" class="text-lg font-black text-amber-950">...</h4>
             </div>
 
             <div class="flex flex-col gap-3">
                 <button id="btn-penalty" onclick="generatePenalty()" class="w-full bg-amber-500 text-white py-3 rounded-xl font-black btn-cyber text-base shadow-md">سزای دۆڕاو! 🔥</button>
-                <button onclick="location.reload()" class="w-full bg-gray-900 text-white py-4 rounded-xl font-black btn-cyber text-lg">یاری نوێ 🔄</button>
+                
+                <button onclick="resetGameWithNames()" class="w-full bg-gradient-to-r from-purple-600 to-indigo-600 text-white py-4 rounded-xl font-black btn-cyber text-lg shadow-md">دووبارە یاری کردن (هەمان ناو) 🔁</button>
+                
+                <button onclick="fullReset()" class="w-full bg-gray-950 text-white py-3 rounded-xl font-bold btn-cyber text-base">یاری نوێ (سڕینەوەی ناوەکان) ❌</button>
             </div>
         </div>
     </div>
+
+    <footer class="mt-16 text-center font-black text-gray-400 tracking-wider text-sm w-full">
+        &copy; 2026 ZANG - ALL RIGHTS RESERVED
+    </footer>
 
     <script>
         let players = []; let roles = []; let currentIndex = 0; let isLocked = false;
         let imposterNames = []; let timerInterval; let currentSecretWord = "";
 
-        // بانکی وشەکان پۆلێن کراوە بۆ ئەوەی سیستمی ئاماژە (Hint) بە جوانی کاربکات
         const categorizedWords = {
-            food: ["برنج", "شۆربا", "یاپراخ", "شاوەرمە", "فەلافل", "بورگەر", "کفتە", "شێلم", "کولا", "چای", "نیسکێنە", "هێلکە", "پەنیر", "پیتزا", "کەباب"],
+            food: ["برنج", "شۆربا", "یاپراخ", "شاوەرمە", "فەلافل", "بورگەر", "کفتە", "شێلم", "کولا", "چای", 
+                    "نیسکێنە", "هێلکە", "پەنیر", "پیتزا", "کەباب", "مەقەڕۆنی", "ماسی", "قۆزی", "برژاو", 
+                    "سەروپێ", "بریانی", "تەماتەوڕۆن", "کشمیش", "دۆینە", "تەپسی", "شفتە", "لوبیا", "نۆکاو", 
+                    "ترخێنە", "پەتاتەی سوورکراوە", "بامێ", "کەرەوز", "ماست", "مایۆنیز", "کەتچەپ", "دۆ", "قەیسی"],
+
             fruit: ["سێو", "شەمامە", "شوتی", "پرتەقاڵ", "مۆز", "کێوی", "هەنار", "ترێ", "خەیار", "تەماتە", "گێزەر"],
-            place: ["سلێمانی", "دهۆک", "کەرکووک", "کۆیە", "زاخۆ", "عێراق", "کوردستان", "ئێران", "تورکیا", "بەغداد", "پاریس", "قوتابخانە", "بازاڕ", "هەولێر"],
-            tech: ["کۆمپیوتەر", "تەلەفزیۆن", "سەلاجە", "سپلیت", "کامێرا", "گڵۆپ", "تەختەکلیل", "ماوس", "ئایپاد", "ئۆتۆمbێل", "پاسکیل", "مۆبایل", "سەعات"],
-            animal: ["شێر", "پشیلە", "سەگ", "ورچ", "گورگ", "ڕێوی", "ئەسپ", "کەروێشک", "مانگا", "مریشک", "مار"]
+
+            place: [
+                 "سلێمانی", "دهۆک", "کەرکووک", "کۆیە", "زاخۆ", "عێراق", "کوردستان", "ئێران", "تورکیا", "بەغداد", 
+                 "PARIS", "قوتابخانە", "بازاڕ", "هەولێر", "سۆران", "ڕانیە", "قەڵادزێ", "حەڵەبجە", "چەمچەماڵ", "ئاکرێ", 
+                 "ئامێدی", "کەلار", "زانکۆ", "نەخۆشخانە", "فڕۆکەخانە", "پارک", "سینەما", "کافتریا", "چێشتخانە", "مۆڵ"],
+
+            tech: ["کۆمپیوتەر", "تەلەفزیۆن", "سەلاجە", "挂机", "کامێرا", "گڵۆپ", "تەختەکلیل", "ماوس", "ئایپاد", "ئۆتۆمبێل", "پاسکیل", "مۆبایل", "سەعات"],
+
+            animal: ["شێر", "پشیلە", "سەگ", "ورچ", "گورگ", "ڕێوی", "ئەسپ", "کەروێشک", "مانگا", "مریشک", "مار"],
+
+            car: ["کادیلاک" ,"نیسان", "تۆیۆتا" ,"مانتۆڕ" ,"مەحاش" ,"کەنار دەریا", "تایلەند", "BYD بی وای دی" ,"حەسەن زیرەک", "پۆلی ١٢", "ئەڵماس" ,"ئاری گەیمینگ","کونە مشك" 
+            ,"ڕوسیا", "هیتلەر" ,"جەنگی جیهانی ٢"]
         };
 
         const penalties = [
             "دەبێت بە دەنگی بەرز گۆرانییەکی منداڵان بڵێت! 🎤",
-            "دەبێت فۆڵۆوی یەکێک لە ئامادەبووان لە ئینستاگرام بسڕێتەوە! 📸",
-            "دەبێت بۆ ماوەی ٢ خولەک بە پێوە بوەستێت و قسە نەکات! 🤫",
-            "دەبێت مۆبایلەکەی بداتە دەست کەسی تەنیشتی بۆ بینینی گەلەری! 📱",
-            "دەبێت یەک پەرداخ ئاوی سارد بە یەک هەنfilter بخواتەوە! 💧",
-            "دەبێت لاسایی دەنگی پشیلە یان سەگ بکاتەوە! 🐱"
+            "دەبێت لاسایی دەنگی پشیلە بکاتەوە! 🐱",
+            "دەبێت بە دەنگی بەرز وەک فرۆشیاری سەر شەقام هاوار بکات: 'تەماتەی خۆش هەیە'! 🍅",
+            "دەبێت بە دەنگی مامۆستایەکی توڕە ئامۆژگاری یاریزانەکەی لای ڕاستی بکات! 👨‍🏫",
+            "دەبێت لاسایی پێکەنینی جۆکەر یان ساحیرێکی شەڕەنگێز بکاتەوە! 😈",
+            "دەبێت بە عەرەبییەکی سەیری مەکەینە قسە بکات تا نۆبەی داهاتووی! 🗣️",
+            "دەبێت لاسایی کەسێکی ناو مەجلیسەکە بکاتەوە و ئەوانی تر بیخەمڵێنن کێیە! 👥",
+            "دەبێت بۆ ماوەی ٣٠ چرکە بە گریانەوە باسی ئەوە بکات بۆچی حەزی لە پەتاتەیە! 😭",
+            "دەبێت فۆڵۆوی یەکێک لە کەسە ئازیزەکانی بسڕێتەوە! 📸",
+            "دەبێت مۆبایلەکەی بداتە دەست کەسی تەنیشتی بۆ بینینی گەلەری (تەنها بۆ ١٠ چرکە)! 📱",
+            "دەبێت نامەیەک بۆ باوکی یان دایکی بنووسێت: 'من ژنم هێنا/شوم کرد' و مۆبایلەکە دابنێت! 💍",
+            "دەبێت ستۆرییەکی ڕەش پۆست بکات و تێیدا بنووسێت: 'خواحافیز بۆ هەمیشە' و بۆ ٥ خولەک لای نەبات! 🖤",
+            "دەبێت تەلەفۆن بۆ هاوڕێیەکی بکات و بڵێت '١٠٠ دۆلارم بە قەرز بدێ خێرا' و دایبخاتەوە! 💵",
+            "دەبێت کۆتا نامەی ڤایبەر یان واتسئەپی بە دەنگی بەرز بخوێنێتەوە! 💬",
+            "دەبێت وێنەیەکی سێڵفی سەیری خۆی بگرێت و بینێرێت بۆ گرووپی خێزانی! 🤳",
+            "دەبێت بۆ ماوەی ٢ خولەک مۆبایلی بخاتە سەر دۆخی فڕین (Airplane mode)! ✈️",
+            "دەبێت یەک پەرداخ ئاوی سارد بە یەک هەناسە بخواتەوە! 💧",
+            "دەبێت کەوچکێک پیازی جنراو یان سیپڵک بخوات! 🧅",
+            "دەبێت کەمێک ئاوی لیمۆی خاو بێ شەکر بخوات و ڕووخساری تێک نەدات! 🍋",
+            "دەبێت کەوچکێکی بچووک کەرەستەیەکی توون (بیبەر یان سۆس) بخوات! 🌶️",
+            "دەبێت پارچەیەک بەفر (ئەگەر هەبێت) بخاتە ناو دەمی تا دەتوێتەوە! 🧊",
+            "دەبێت پەرداخێک ئاو بخواتەوە بەڵام بە کەوچکی چا! 🥄",
+            "دەبێت بڕواتە مەتبەخ و سێ کەوچک شۆربا یان ماست بە خێرایی بخوات! 🥣",
+            "دەبێت بۆ ماوەی ٣٠ چرکە بە پێوە بوەستێت و قسە نەکات! 🤫",
+            "دەبێت بۆ ماوەی ٣٠ چرکە لەسەر یەک قاچ بوەستێت و دەستەکانی ڕاوەشێنێت! 🤸‍♂️",
+            "دەبێت بۆ ماوەی ٣٠ چرکە وەک پاسەوان لە دەرگای ژوورەکە بوەستێت! 🚪",
+            "دەبێت بە لووتی، بازنەیەک لەسەر شاشەی مۆبایلی کەسی بەرامبەری بکێشێت! 👃",
+            "دەبێت پێڵاوەکانی پێچەوانە لەپێ بکات تا کۆتایی یارییەکە! 👟",
+            "دەبێت وەک ڕۆبۆت بجوڵێت و قسە بکات بۆ ماوەی دوو نۆبەی تر! 🤖",
+            "دەبێت دەستی کەسی لای ڕاستی ماچ بکات و بڵێت 'تۆ شای شایانی'! 👑",
+            "دەبێت قژی خۆی بە تەواوی تێکبدات و بەو شێوازە بمێنێتەوە! 🦱",
+            "دەبێت بۆ ماوەی ١ خولەک چاو ببڕێتە ناو چاوی کەسی بەرامبەری بێ ئەوەی پێبکەنێت! 👀",
+            "دەبێت سێ سیفەتی زۆر ناخۆشی خۆی بە ڕاستگۆیی بڵێت! 🤐",
+            "دەبێت باسی شەرمەزارکەرترین ڕووداو بکات کە لە قوتابخانە بەسەری هاتووە! 🏫",
+            "دەبێت بۆ ماوەی ٣٠ چرکە تاریفی بەهرە و جوانییەکانی کەسی لای چەپی بکات! 🌹",
+            "دەبێت مۆڵەت لە مەجلیسەکە بخوازێت و دەست بەسەر سەری هەموواندا بهێنێت! ✋",
+            "دەبێت هاوار بکات: 'من دۆڕاوم و پێویستم بە هاوسۆزییە'! 📢",
+            "دەبێت بۆ ماوەی ١ خولەک مۆبایلەکەی بداتە کەسی تەنیشتی، ئەویش چی ویست لە جیاتی ئەم ستۆری بکات! 🎭"
         ];
 
         function showSection(id) {
@@ -218,6 +261,10 @@
 
         function addInput() {
             const container = document.getElementById('player-inputs');
+            if (container.children.length >= 6) {
+                return;
+            }
+
             const input = document.createElement('input');
             input.type = "text";
             input.placeholder = `ناوی یاریزانی ${container.children.length + 1}`;
@@ -243,7 +290,6 @@
             let requestedImposters = parseInt(document.getElementById('imposter-count').value);
             if (players.length < 5) requestedImposters = 1;
 
-            // هەڵبژاردنی بەشێکی هەڕەمەکی و پاشان وشەیەکی ناوی
             const categories = Object.keys(categorizedWords);
             const chosenCategory = categories[Math.floor(Math.random() * categories.length)];
             const wordList = categorizedWords[chosenCategory];
@@ -279,7 +325,6 @@
                 document.getElementById('card-content').innerText = currentRole; 
                 document.getElementById('main-card').classList.add('flipped'); 
                 
-                // ئەگەر فریودەر بوو، دوگمەی هینت پیشان بدە
                 if(currentRole.includes("فریودەریت")) {
                     document.getElementById('hint-button').classList.remove('hidden');
                 }
@@ -287,9 +332,8 @@
         }
 
         function showImposterHint(event) {
-            event.stopPropagation(); // ڕێگری لە گەڕانەوەی کارتەکە دەکات
+            event.stopPropagation(); 
             
-            // دۆزینەوەی ئەو بەشەی وشە ڕاستەقینەکەی تێدایە
             let chosenCategory = "";
             for (let cat in categorizedWords) {
                 if (categorizedWords[cat].includes(currentSecretWord)) {
@@ -298,7 +342,6 @@
                 }
             }
             
-            // دروستکردنی ٣ وشەی هەڕەمەکی لە هەمان کاتێگۆری کە وشە ئەسڵییەکە نەبن
             let filteredList = categorizedWords[chosenCategory].filter(w => w !== currentSecretWord);
             let hints = [];
             while(hints.length < 3 && filteredList.length > 0) {
@@ -306,10 +349,9 @@
                 if(!hints.includes(randW)) hints.push(randW);
             }
             
-            // پیشاندانی وشە پێشنیارکراوەکان بە تێکەڵاوی
             document.getElementById('hint-text').innerText = `وشە ڕاستەقینەکە یەکێکە لەم سێ دانەیە: [ ${hints.join(' - ')} ]`;
             document.getElementById('hint-text').classList.remove('hidden');
-            document.getElementById('hint-button').classList.add('hidden'); // تەنها یەکجار دەتوانێت کلیک بکات
+            document.getElementById('hint-button').classList.add('hidden'); 
         }
 
         function lockCard(event) {
@@ -353,6 +395,43 @@
             document.getElementById('penalty-text').innerText = randomPenalty;
             document.getElementById('penalty-box').classList.remove('hidden');
             document.getElementById('btn-penalty').innerText = "گۆڕینی سزا 🎲";
+        }
+
+        function resetGameWithNames() {
+            clearInterval(timerInterval);
+            
+            document.getElementById('timer-display').innerText = "03:00";
+            document.getElementById('btn-start-timer').classList.remove('hidden');
+            document.getElementById('btn-end-game').classList.add('hidden');
+            document.getElementById('penalty-box').classList.add('hidden');
+            document.getElementById('btn-penalty').innerText = "سزای دۆڕاو! 🔥";
+            
+            showSection('section-setup');
+        }
+
+        function fullReset() {
+            clearInterval(timerInterval);
+            
+            const container = document.getElementById('player-inputs');
+            container.innerHTML = `
+                <input type="text" placeholder="ناوی یاریزانی ١" class="w-full p-3 bg-white/50 border-2 border-purple-100 rounded-xl font-bold outline-none focus:border-purple-500 focus:bg-white transition">
+                <input type="text" placeholder="ناوی یاریزانی ٢" class="w-full p-3 bg-white/50 border-2 border-purple-100 rounded-xl font-bold outline-none focus:border-purple-500 focus:bg-white transition">
+                <input type="text" placeholder="ناوی یاریزانی ٣" class="w-full p-3 bg-white/50 border-2 border-purple-100 rounded-xl font-bold outline-none focus:border-purple-500 focus:bg-white transition">
+                <input type="text" placeholder="ناوی یاریزانی ٤" class="w-full p-3 bg-white/50 border-2 border-purple-100 rounded-xl font-bold outline-none focus:border-purple-500 focus:bg-white transition">
+            `;
+            
+            document.getElementById('timer-display').innerText = "03:00";
+            document.getElementById('btn-start-timer').classList.remove('hidden');
+            document.getElementById('btn-end-game').classList.add('hidden');
+            document.getElementById('penalty-box').classList.add('hidden');
+            document.getElementById('btn-penalty').innerText = "سزای دۆڕاو! 🔥";
+            
+            players = [];
+            roles = [];
+            currentIndex = 0;
+            
+            checkImposterVisibility();
+            showSection('section-setup');
         }
     </script>
 </body>

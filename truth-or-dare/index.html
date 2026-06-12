@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>راستی یان بوێری | زەنگ</title>
+    <title>ڕاستی یان بوێری | زەنگ</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;700;900&display=swap');
@@ -27,7 +27,7 @@
             z-index: -1;
         }
 
-        /* 🎛️ دیزاینی کارتەکان بە ستایلی درەوشانەوەی گەشاوە و لێڵ (Glassmorphism) */
+        /* 🎛️ دیزاینی کارتەکان بە ستایلی لێڵ (Glassmorphism) */
         .game-card-neon {
             background: rgba(255, 255, 255, 0.75);
             backdrop-filter: blur(12px);
@@ -41,7 +41,7 @@
         /* 🔘 ستایلی دوگمە گەشمۆدێڕنەکان */
         .btn-cyber {
             border-bottom: 4px solid rgba(0,0,0,0.2);
-            transition: all 0.15s ease-in-out;
+            transition: transform 0.1s ease-in-out, border-width 0.1s ease-in-out;
         }
         .btn-cyber:active {
             transform: translateY(3px);
@@ -49,15 +49,23 @@
         }
 
         .category-btn {
-            background: rgba(255, 255, 255, 0.5);
+            background: rgba(255, 255, 255, 0.6);
             border: 2px solid rgba(229, 231, 235, 1);
-            transition: all 0.2s;
+            transition: all 0.2s ease;
         }
-        .category-btn.selected {
-            background: rgba(59, 130, 246, 0.1);
-            border-color: #3b82f6;
-            color: #1d4ed8;
-            box-shadow: 0 0 15px rgba(59, 130, 246, 0.2);
+        
+        /* 🎨 ڕەنگی تایبەت بۆ هەر بەشێک کاتێک دیاری دەکرێت */
+        .category-btn.selected[id^="t_"] {
+            background: rgba(16, 185, 129, 0.1);
+            border-color: #10b981;
+            color: #047857;
+            box-shadow: 0 0 15px rgba(16, 185, 129, 0.15);
+        }
+        .category-btn.selected[id^="d_"] {
+            background: rgba(239, 68, 68, 0.1);
+            border-color: #ef4444;
+            color: #b91c1c;
+            box-shadow: 0 0 15px rgba(239, 68, 68, 0.15);
         }
     </style>
 </head>
@@ -68,7 +76,7 @@
     <header class="w-full max-w-4xl mx-auto mb-8 px-4 py-3 bg-white/50 backdrop-blur-md rounded-2xl border border-white/60 shadow-sm flex justify-between items-center">
         <div class="flex items-center gap-3">
             <div class="w-3 h-3 rounded-full bg-blue-500 shadow-[0_0_10px_#3b82f6] animate-pulse"></div>
-            <h1 class="text-xl md:text-2xl font-[900] text-gray-800">راستی یان بوێری</h1>
+            <h1 class="text-xl md:text-2xl font-[900] text-gray-800">ڕاستی یان بوێری</h1>
         </div>
         <nav class="flex gap-4 font-black text-sm md:text-base text-gray-700">
             <a href="../index.html" class="hover:text-blue-600 transition">➔ گەڕانەوە</a>
@@ -79,14 +87,17 @@
         
         <div id="section-players" class="game-card-neon p-6 md:p-8 rounded-2xl">
             <h2 class="text-2xl font-[900] mb-6 text-gray-800 text-center border-b border-gray-200/60 pb-4">کێ یاری دەکات؟</h2>
-            <div id="player-inputs" class="space-y-4">
-                <input type="text" placeholder="ناوی یاریزانی ١" class="w-full p-3.5 bg-white/80 border-2 border-gray-200 rounded-xl font-bold outline-none focus:border-blue-500 transition-all text-gray-800 placeholder-gray-400">
-                <input type="text" placeholder="ناوی یاریزانی ٢" class="w-full p-3.5 bg-white/80 border-2 border-gray-200 rounded-xl font-bold outline-none focus:border-blue-500 transition-all text-gray-800 placeholder-gray-400">
+            <div id="player-inputs" class="space-y-3">
+                <div class="flex gap-2 items-center">
+                    <input type="text" placeholder="ناوی یاریزانی ١" class="w-full p-3.5 bg-white/80 border-2 border-gray-200 rounded-xl font-bold outline-none focus:border-blue-500 transition-all text-gray-800 placeholder-gray-400">
+                </div>
+                <div class="flex gap-2 items-center">
+                    <input type="text" placeholder="ناوی یاریزانی ٢" class="w-full p-3.5 bg-white/80 border-2 border-gray-200 rounded-xl font-bold outline-none focus:border-blue-500 transition-all text-gray-800 placeholder-gray-400">
+                </div>
             </div>
             
             <div class="flex gap-3 mt-4">
                 <button onclick="addInput()" class="flex-1 bg-gray-100 border border-gray-200 text-gray-700 hover:bg-gray-200 btn-cyber py-2.5 rounded-xl font-black transition-all">+ یاریزان</button>
-                <button onclick="removeInput()" class="flex-1 bg-rose-50 border border-rose-200 text-rose-600 hover:bg-rose-100 btn-cyber py-2.5 rounded-xl font-black transition-all">- کەمکردن</button>
             </div>
             
             <button onclick="goToCategories()" class="w-full mt-6 btn-cyber bg-gradient-to-r from-blue-500 to-indigo-500 text-white py-4 rounded-xl font-[900] text-xl shadow-lg shadow-blue-500/20">دواتر ➔</button>
@@ -97,19 +108,21 @@
             
             <div class="space-y-6">
                 <div>
-                    <p class="font-black mb-3 text-lg text-gray-700">راستی (Truth):</p>
+                    <p class="font-black mb-3 text-lg text-emerald-600 flex items-center gap-2">🤔 ڕاستی (Truth):</p>
                     <div class="grid grid-cols-2 gap-3">
-                        <button onclick="toggleCat('t_social')" id="t_social" class="category-btn p-3.5 rounded-xl font-bold">سۆشیال میدیا</button>
-                        <button onclick="toggleCat('t_love')" id="t_love" class="category-btn p-3.5 rounded-xl font-bold">خۆشەویستی</button>
-                        <button onclick="toggleCat('t_food')" id="t_food" class="category-btn p-3.5 rounded-xl font-bold col-span-2">خواردن (ڕاستی)</button>
+                        <button onclick="toggleCat('t_social')" id="t_social" class="category-btn p-3.5 rounded-xl font-bold">🌐 سۆشیال میدیا</button>
+                        <button onclick="toggleCat('t_love')" id="t_love" class="category-btn p-3.5 rounded-xl font-bold">❤️ خۆشەویستی</button>
+                        <button onclick="toggleCat('t_food')" id="t_food" class="category-btn p-3.5 rounded-xl font-bold">🍔 خواردن</button>
+                        <button onclick="toggleCat('t_crazy')" id="t_crazy" class="category-btn p-3.5 rounded-xl font-bold">🤪 شێتانە</button>
                     </div>
                 </div>
                 <div>
-                    <p class="font-black mb-3 text-lg text-gray-700">بوێری (Dare):</p>
+                    <p class="font-black mb-3 text-lg text-rose-600 flex items-center gap-2">🔥 بوێری (Dare):</p>
                     <div class="grid grid-cols-2 gap-3">
-                        <button onclick="toggleCat('d_body')" id="d_body" class="category-btn p-3.5 rounded-xl font-bold">جەستەیی</button>
-                        <button onclick="toggleCat('d_food')" id="d_food" class="category-btn p-3.5 rounded-xl font-bold">خواردن</button>
-                        <button onclick="toggleCat('d_social')" id="d_social" class="category-btn p-3.5 rounded-xl font-bold col-span-2">سۆشیال میدیا</button>
+                        <button onclick="toggleCat('d_body')" id="d_body" class="category-btn p-3.5 rounded-xl font-bold">💪 جەستەیی</button>
+                        <button onclick="toggleCat('d_food')" id="d_food" class="category-btn p-3.5 rounded-xl font-bold">🌶️ خواردن</button>
+                        <button onclick="toggleCat('d_social')" id="d_social" class="category-btn p-3.5 rounded-xl font-bold">📱 سۆشیال میدیا</button>
+                        <button onclick="toggleCat('d_crazy')" id="d_crazy" class="category-btn p-3.5 rounded-xl font-bold">⚡ شێتانە</button>
                     </div>
                 </div>
             </div>
@@ -123,16 +136,16 @@
                 <h2 id="active-player" class="text-4xl font-[900] mb-8 text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600 tracking-wide">...</h2>
                 
                 <div class="grid grid-cols-2 gap-4">
-                    <button onclick="pickChoice('truth')" class="btn-cyber bg-gradient-to-r from-emerald-500 to-green-500 text-white py-5 rounded-xl font-black text-2xl shadow-md shadow-green-500/10">راستی</button>
+                    <button onclick="pickChoice('truth')" class="btn-cyber bg-gradient-to-r from-emerald-500 to-green-500 text-white py-5 rounded-xl font-black text-2xl shadow-md shadow-green-500/10">ڕاستی</button>
                     <button onclick="pickChoice('dare')" class="btn-cyber bg-gradient-to-r from-red-500 to-rose-500 text-white py-5 rounded-xl font-black text-2xl shadow-md shadow-red-500/10">بوێری</button>
                 </div>
             </div>
         </div>
 
         <div id="section-card" class="hidden-section text-center">
-            <div class="game-card-neon p-8 rounded-2xl min-h-[340px] flex flex-col justify-between items-center border-t-4 border-t-blue-500">
+            <div id="card-container" class="game-card-neon p-8 rounded-2xl min-h-[340px] flex flex-col justify-between items-center border-t-4">
                 <div class="w-full">
-                    <span id="choice-type" class="bg-blue-50 text-blue-600 px-5 py-1.5 rounded-full font-black text-sm tracking-wide inline-block shadow-sm">...</span>
+                    <span id="choice-type" class="px-5 py-1.5 rounded-full font-black text-sm tracking-wide inline-block shadow-sm">...</span>
                     <p id="task-text" class="text-2xl font-black leading-relaxed my-8 text-gray-800 px-2">...</p>
                 </div>
                 
@@ -151,35 +164,64 @@
 
     <script>
         let players = []; let selectedCats = []; let currentIndex = 0; let currentType = ''; let hasChanged = false;
-        let lastTask = "";
+        
+        // سیستەمی ڕێگریکردن لە دووبارە بوونەوەی پرسیارەکان
+        let usedTasks = {};
 
-        // داتای پرسیارەکان
         const data = {
             t_social: ["کۆتا نامە کە ناردووتە بۆ کێ بووە؟", "نهێنیەک لە مۆبایلەکەتدا هەیە کە کەس نەیبینێت؟", "کێ زۆرترین سەردانی پڕۆفایلی دەکەیت؟", "تا ئێستا بە ئەکاونتی ساختە چاودێری کەسێکت کردووە؟", "کۆتا کەس کێ بوو نامەی بۆ ناردی و وەڵامت نەدایەوە؟", "ڕۆژانە زۆرترین کات لە کام ئەپ بەسەر دەبەیت؟"],
-            t_love: ["یەکەم کەس کێ بوو کە بە ڕاستی حەزت لێی بوو؟", "گرنگترین سیفەت لای تۆ بۆ هاوبەشی ژیانت چییە؟", "تا ئێستا بە درۆ بە کەسێکت وتووە خۆشم دەوێیت؟", "ئایا تا ئێستا بە نهێنی گریاویت لەبەر کەسێک؟", "کۆتا جار کەی بوو کەت دڵت بە ڕاستی شکا؟"],
-            t_food: ["پیسترین خواردن کە خواردبێت تا ئێستا چی بووە؟", "سەیریترین تێکەڵەی خواردن کە حەزت لێیەتی چییە؟", "تا ئێستا بووە بە دزییەوە لە نیوەشەودا بچیتە سەر سەلاجە؟"],
-            d_body: ["١٠ دانە پۆشەپ (Push-up) بکە.", "بۆ ماوەی یەک خولەک لەسەر یەک قاچ بوەستە.", "ناوی هەموو یاریزانەکان بە پێچەوانەوە بڵێ.", "مۆبایلەکەت بخەرە سەر سەرت و بە ژوورەکەدا بڕۆ بێ ئەوەی بکەوێت."],
-            d_food: ["کەمێک خوێ بخۆ.", "کەمێک لیمۆ یان سرکە بخۆ بەبێ ئەوەی ڕووخسارت تێک بدەیت.", "پەرداخێک ئاو بە یەکجار بخۆرەوە بەبێ هەناسەدان."],
-            d_social: ["وێنەیەکی کۆنی خۆت پۆست بکە.", "ستۆرییەک بکە و تێیدا بڵێ من زۆر زیرەکم.", "بۆ ماوەی ٥ خولەک مۆبایلەکەت بدە بە یاریزانەکەی لای ڕاستت."]
+            t_love: ["یەکەم کەس کێ بوو کە بە ڕاستی حەزت لێی بوو؟", "گرنگترین سیفەت لای تۆ بۆ هاوبەشی ژیانت چییە؟", "تا ئێستا بە درۆ بە کەسێکت وتووە خۆشم دەوێیت؟", "ئایا تا ئێستا بە نهێنی گریاویت لەبەر کەسێک؟", "کۆتا جار کەی بوو کە دڵت بە ڕاستی شکا؟"],
+            t_food: ["پیسترین خواردن کە خواردبێت تا ئێستا چی بووە؟", "سەیریترین تێکەڵەی خواردن کە حەزت لێیەتی چییە؟", "تا ئێستا بووە بە دزییەوە لە نیوەشەودا بچیتە سەر سەلاجە؟", "خواردنێک هەیە کە هەمووان حەزی لێبکەن بەس تۆ ڕقت لێی بێت؟"],
+            t_crazy: ["سەیرترین خەون کە تا ئێستا بینیوتە چی بووە؟", "ئەگەر بتوانیت بۆ یەک ڕۆژ ببیتە کەسێکی تر، کێ هەڵدەبژێریت؟", "گەورەترین درۆ کە تا ئێستا بە دایک و باوکت وتووە چییە؟", "تا ئێستا لە شوێنێکی گشتیدا تووشی حاڵەتێکی شەرمەزارکەر بوویت؟"],
+            d_body: ["١٠ دانە پۆشەپ (Push-up) بکە.", "بۆ ماوەی یەک خولەک لەسەر یەک قاچ بوەستە.", "ناوی هەموو یاریزانەکان بە پێچەوانەوە بڵێ.", "مۆبایلەکەت بخەرە سەر سەرت و بە ژوورەکەدا بڕۆ بێ ئەوەی بکەوێت.", "بۆ ماوەی ٣٠ چرکە بەبێ وەستان ڕاکە لە شوێنی خۆتدا."],
+            d_food: ["کەمێک خوێ بخۆ.", "کەمێک لیمۆ یان سرکە بخۆ بەبێ ئەوەی ڕووخسارت تێک بدەیت.", "پەرداخێک ئاو بە یەکجار بخۆرەوە بەبێ هەناسەدان.", "کەوچکێک ماست یان دۆشاو بە تێکەڵی لەگەڵ کەمێک بیبەر بخۆ."],
+            d_social: ["وێنەیەکی کۆنی خۆت پۆست بکە.", "ستۆرییەک بکە و تێیدا بڵێ من زۆر زیرەکم.", "بۆ ماوەی ٥ خولەک مۆبایلەکەت بدە بە یاریزانەکەی لای ڕاستت.", "نامەیەک بنێرە بۆ پێنجەم کەس لە لیستی چاتی ئینستاگرامەکەت و بڵێ بیرت دەکەم."],
+            d_crazy: ["بۆ ماوەی یەک خولەک وەک ڕۆبۆت قسە بکە.", "دەنگی ئاژەڵێک لێبدەوە بە دەنگی بەرز.", "بۆ ماوەی ٢ خولەک بەبێ هۆکار پێبکەنە.", "کەسێکی ناو ژوورەکە هەڵبژێڕە و بۆ یەک خولەک تەنها سەیری چاوی بکە بەبێ چاو تروکاندن."]
         };
+
+        // ڕێستکردنەوەی لیستی پرسیارە بەکارهاتووەکان
+        function initUsedTasks() {
+            for (let key in data) {
+                usedTasks[key] = [];
+            }
+        }
 
         function addInput() {
             const container = document.getElementById('player-inputs');
+            if (container.children.length >= 6) return;
+            
+            const div = document.createElement('div');
+            div.className = "flex gap-2 items-center w-full animate-fadeIn";
+            
             const input = document.createElement('input');
-            input.type = "text"; input.placeholder = `ناوی یاریزانی ${container.children.length + 1}`;
+            input.type = "text"; 
+            input.placeholder = `ناوی یاریزانی ${container.children.length + 1}`;
             input.className = "w-full p-3.5 bg-white/80 border-2 border-gray-200 rounded-xl font-bold outline-none focus:border-blue-500 transition-all text-gray-800 placeholder-gray-400";
-            container.appendChild(input);
+            
+            const removeBtn = document.createElement('button');
+            removeBtn.innerHTML = "✕";
+            removeBtn.className = "p-3.5 bg-rose-50 text-rose-500 hover:bg-rose-100 rounded-xl font-black transition-all border border-rose-200";
+            removeBtn.onclick = function() {
+                container.removeChild(div);
+                reindexPlaceholders();
+            };
+            
+            div.appendChild(input);
+            div.appendChild(removeBtn);
+            container.appendChild(div);
         }
 
-        function removeInput() {
-            const container = document.getElementById('player-inputs');
-            if (container.children.length > 2) container.removeChild(container.lastChild);
+        function reindexPlaceholders() {
+            const inputs = document.querySelectorAll('#player-inputs input');
+            inputs.forEach((input, index) => {
+                input.placeholder = `ناوی یاریزانی ${index + 1}`;
+            });
         }
 
         function goToCategories() {
             const inputs = document.querySelectorAll('#player-inputs input');
             players = Array.from(inputs).map(i => i.value.trim()).filter(v => v !== "");
-            if (players.length < 2) { alert("لانی کەم ٢ ناو بنووسە!"); return; }
+            if (players.length < 2) { alert("⚠️ لانی کەم ٢ ناو بنووسە!"); return; }
             showSection('section-categories');
         }
 
@@ -199,7 +241,7 @@
             document.getElementById(id).classList.remove('hidden-section');
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
-
+        
         function startTheGame() {
             const hasTruth = selectedCats.some(cat => cat.startsWith('t_'));
             const hasDare = selectedCats.some(cat => cat.startsWith('d_'));
@@ -207,6 +249,7 @@
                 alert("⚠️ تکایە لانی کەم یەک بەش لە ڕاستی و یەک بەش لە بوێری هەڵبژێرە!");
                 return;
             }
+            initUsedTasks();
             currentIndex = 0;
             updateTurn();
             showSection('section-main-game');
@@ -219,8 +262,21 @@
         function pickChoice(type) {
             currentType = type;
             hasChanged = false;
+            
+            const cardContainer = document.getElementById('card-container');
+            const choiceTypeSpan = document.getElementById('choice-type');
             document.getElementById('change-btn').style.display = 'block';
-            document.getElementById('choice-type').innerText = type === 'truth' ? "🤔 ڕاستی (Truth)" : "🔥 بوێری (Dare)";
+            
+            if (type === 'truth') {
+                cardContainer.style.borderTopColor = "#10b981";
+                choiceTypeSpan.className = "bg-emerald-50 text-emerald-600 px-5 py-1.5 rounded-full font-black text-sm tracking-wide inline-block shadow-sm";
+                choiceTypeSpan.innerText = "🤔 ڕاستی (Truth)";
+            } else {
+                cardContainer.style.borderTopColor = "#ef4444";
+                choiceTypeSpan.className = "bg-rose-50 text-rose-600 px-5 py-1.5 rounded-full font-black text-sm tracking-wide inline-block shadow-sm";
+                choiceTypeSpan.innerText = "🔥 بوێری (Dare)";
+            }
+            
             setRandomTask();
             showSection('section-card');
         }
@@ -228,16 +284,24 @@
         function setRandomTask() {
             const prefix = currentType === 'truth' ? 't_' : 'd_';
             const availablePool = selectedCats.filter(c => c.startsWith(prefix));
-            const randomCat = availablePool[Math.floor(Math.random() * availablePool.length)];
-            const tasks = data[randomCat];
-            let newTask = tasks[Math.floor(Math.random() * tasks.length)];
             
-            if (tasks.length > 1) {
-                while (newTask === lastTask) {
-                    newTask = tasks[Math.floor(Math.random() * tasks.length)];
-                }
+            // هەڵبژاردنی پۆلێکی هەڕەمەکی کە پرسیاری تێدا مابێت
+            let validCats = availablePool.filter(cat => usedTasks[cat].length < data[cat].length);
+            
+            // ئەگەر هەموو پرسیارەکانی پۆلەکان بەکارهاتبوون، ڕێستیان دەکەینەوە
+            if (validCats.length === 0) {
+                availablePool.forEach(cat => usedTasks[cat] = []);
+                validCats = availablePool;
             }
-            lastTask = newTask;
+            
+            const randomCat = validCats[Math.floor(Math.random() * validCats.length)];
+            const tasks = data[randomCat];
+            
+            // پاڵاوتنی ئەو پرسیارانەی کە هێشتا بەکارنەهاتوون لەم پۆلەدا
+            const remainingTasks = tasks.filter(t => !usedTasks[randomCat].includes(t));
+            const newTask = remainingTasks[Math.floor(Math.random() * remainingTasks.length)];
+            
+            usedTasks[randomCat].push(newTask);
             document.getElementById('task-text').innerText = newTask;
         }
 

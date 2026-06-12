@@ -2,7 +2,7 @@
 <html lang="ku" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>شیرینی پڕۆژەکە | زەنگ</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
@@ -12,21 +12,12 @@
             font-family: 'Vazirmatn', sans-serif;
             background: linear-gradient(135deg, #f3f4f6 0%, #eef2ff 50%, #fae8ff 100%);
             min-height: 100vh;
-            overflow-x: hidden;
+            overflow-x: hidden; /* ڕێگری تەواو لە جوڵان بۆ ڕاست و چەپ */
             position: relative;
+            width: 100%;
         }
 
-        /* 🌟 کاریگەری ڕەنگی بریقەدار لە پشتەوە */
-        .neon-bg-gold {
-            position: absolute;
-            width: 450px;
-            height: 450px;
-            background: radial-gradient(circle, rgba(245, 158, 11, 0.15) 0%, rgba(99, 102, 241, 0) 70%);
-            top: -10%;
-            right: -10%;
-            z-index: -1;
-        }
-
+        /* 🔒 لێرەدا کارتەکە کرا بە تەواو جێگیر بەبێ هیچ ئەنیمەیشنێکی قورس */
         .game-card-neon {
             background: rgba(255, 255, 255, 0.8);
             backdrop-filter: blur(16px);
@@ -34,31 +25,9 @@
             border-bottom: 6px solid rgba(0, 0, 0, 0.12);
             box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.05);
         }
-
-        /* ✨ کاریگەری جوڵانی دوگمەکان */
-        .btn-cyber {
-            border-bottom: 4px solid rgba(0,0,0,0.18);
-            transition: all 0.15s ease-in-out;
-        }
-        .btn-cyber:active {
-            transform: translateY(3px);
-            border-bottom-width: 1px;
-        }
-
-        .donate-row {
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        .donate-row:hover {
-            transform: scale(1.02) translateY(-2px);
-            background: rgb(255, 251, 235);
-            border-color: #f59e0b;
-            box-shadow: 0 10px 20px -10px rgba(245, 158, 11, 0.3);
-        }
     </style>
 </head>
 <body class="p-4 md:p-8 flex flex-col items-center">
-
-    <div class="neon-bg-gold"></div>
 
     <header class="w-full max-w-4xl px-4 py-3 md:px-8 bg-white/50 backdrop-blur-md rounded-2xl border border-white/60 shadow-sm mx-auto">
         <div class="flex justify-between items-center">
@@ -76,59 +45,48 @@
         </div>
     </header>
 
-    <main class="w-full max-w-xl mx-auto mt-12 md:mt-16">
-        <div class="game-card-neon p-6 md:p-8 rounded-3xl border-t-4 border-t-amber-500 relative overflow-hidden">
+    <main class="w-full max-w-md mx-auto mt-12 md:mt-16">
+        <div class="game-card-neon p-6 md:p-8 rounded-3xl border-t-4 border-t-amber-500 text-center">
             
-            <div class="absolute -top-10 -left-10 w-32 h-32 bg-amber-500/10 rounded-full blur-xl"></div>
-
-            <div class="text-6xl text-center mb-4 filter drop-shadow-sm">🍰🪙</div>
-            <h2 class="text-2xl md:text-3xl font-[900] text-center text-amber-600 mb-2">شیرینی پرۆگرامەر</h2>
-            <p class="text-gray-500 font-bold text-center text-sm md:text-base leading-relaxed mb-8 px-2">
-                ئەگەر لە مەجلیسەکەتاندا کاتێکی خۆشتان بەسەر برد و زۆر پێکەنین، لێرەوە دەتوانیت بە دڵخوازی خۆت شیرینییەکی پیاوانە بنێریت بۆ ماندووبوونی گەشەپێدەرەکە! 
+            <div class="text-6xl mb-4">🍰</div>
+            <h2 class="text-2xl font-[900] text-amber-600 mb-2"> کێکەکمان لۆ بکڕە🤭</h2>
+            <p class="text-gray-500 font-bold text-sm leading-relaxed mb-6">
+                بۆ پشتیوانی پڕۆژەکە و ناردنی شیرینی، دەتوانیت بارکۆدی خوارەوە سکان بکەیت یان ژمارەکە کۆپی بکەیت و لە ناو ئەپی فاستپەی بنێریت.
             </p>
 
-            <div class="space-y-4">
-                
-                <a href="https://fastpay.cash/transfer?to=07506310121&amount=1000" target="_blank" class="donate-row flex items-center justify-between bg-white/90 p-4 rounded-2xl border border-gray-200/80 transition group">
-                    <div class="flex items-center gap-4">
-                        <div class="text-4xl group-hover:rotate-12 transition-transform bg-amber-50 p-2.5 rounded-xl">☕</div>
-                        <div>
-                            <h3 class="font-black text-gray-800 text-base">چایەکی قەتران و حێل</h3>
-                            <p class="text-xs font-bold text-gray-400 mt-0.5">بۆ هێشتنەوەی مێشک بە بەئاگایی</p>
-                        </div>
-                    </div>
-                    <div class="bg-amber-500 text-white text-sm font-black px-4 py-2.5 rounded-xl btn-cyber shadow-md shadow-amber-500/10">١,٠٠٠ د.ع</div>
-                </a>
-
-                <a href="https://fastpay.cash/transfer?to=07506310121&amount=2500" target="_blank" class="donate-row flex items-center justify-between bg-white/90 p-4 rounded-2xl border border-gray-200/80 transition group">
-                    <div class="flex items-center gap-4">
-                        <div class="text-4xl group-hover:rotate-12 transition-transform bg-amber-50 p-2.5 rounded-xl">🍰</div>
-                        <div>
-                            <h3 class="font-black text-gray-800 text-base">کێک و شەربەتێکی سارد</h3>
-                            <p class="text-xs font-bold text-gray-400 mt-0.5">شیرینییەکی سووک بۆ دوای مەجلیس</p>
-                        </div>
-                    </div>
-                    <div class="bg-amber-500 text-white text-sm font-black px-4 py-2.5 rounded-xl btn-cyber shadow-md shadow-amber-500/10">٢,٥٠٠ د.ع</div>
-                </a>
-
-                <a href="https://fastpay.cash/transfer?to=07506310121&amount=5000" target="_blank" class="donate-row flex items-center justify-between bg-white/90 p-4 rounded-2xl border border-gray-200/80 transition group">
-                    <div class="flex items-center gap-4">
-                        <div class="text-4xl group-hover:rotate-12 transition-transform bg-amber-50 p-2.5 rounded-xl">🍔</div>
-                        <div>
-                            <h3 class="font-black text-gray-800 text-base">ژەمە خۆراکێکی خێرا</h3>
-                            <p class="text-xs font-bold text-gray-400 mt-0.5">بۆ ئەوەی پڕۆژەکە نەوەستێت و بەردەوام بێت</p>
-                        </div>
-                    </div>
-                    <div class="bg-amber-500 text-white text-sm font-black px-4 py-2.5 rounded-xl btn-cyber shadow-md shadow-amber-500/10">٥,٠٠٠ د.ع</div>
-                </a>
-
+            <div class="bg-white p-3 inline-block rounded-2xl border-2 border-dashed border-amber-400 mb-4 shadow-sm">
+                <img src="fastpay-qr.png" alt="FastPay QR" class="w-48 h-48 object-contain rounded-xl">
             </div>
 
-            <div class="mt-8 border-t border-gray-200/60 pt-4 text-center">
-                <p class="text-xs text-gray-400 font-black tracking-wide">پشتیوانیکردنی پڕۆژە لۆکاڵییەکان هەمیشە مەجلیسەکان ئاوەدان دەکاتەوە 🤝</p>
+            <div class="flex items-center justify-between bg-gray-50 p-3 rounded-xl border border-gray-200">
+                <span id="phoneNumber" class="font-mono font-black text-gray-700 text-base tracking-wider">07501234567</span>
+                <button onclick="copyNumber()" id="copyBtn" class="bg-amber-500 hover:bg-amber-600 text-white font-black text-xs px-4 py-2 rounded-lg transition active:scale-95">کۆپی بکە</button>
             </div>
+
+            <div class="mt-6 border-t border-gray-200/60 pt-4">
+                <p class="text-[11px] text-gray-400 font-black">سپاس بۆ پشتیوانیکردنی پڕۆژە لۆکاڵییەکان 🤝</p>
+            </div>
+
         </div>
     </main>
+
+    <script>
+        function copyNumber() {
+            const num = document.getElementById('phoneNumber').innerText;
+            navigator.clipboard.writeText(num);
+            
+            const btn = document.getElementById('copyBtn');
+            btn.innerText = "کۆپی بوو! ✓";
+            btn.classList.remove('bg-amber-500');
+            btn.classList.add('bg-green-600');
+            
+            setTimeout(() => {
+                btn.innerText = "کۆپی بکە";
+                btn.classList.remove('bg-green-600');
+                btn.classList.add('bg-amber-500');
+            }, 2000);
+        }
+    </script>
 
     <footer class="mt-16 text-center font-black text-gray-400 tracking-wider text-sm w-full">
         &copy; 2026 ZANG - ALL RIGHTS RESERVED
